@@ -18,6 +18,8 @@ connect_to_collection = mydb['students']
 
 app = Flask(__name__)
 
+
+
 @app.route("/")
 def home():
     #flash("Hellooooooooo")
@@ -53,17 +55,17 @@ def homepage(user=None):
 
 @app.route("/")
 @app.route("/register/", methods=['GET','POST'])
-def register(user=None): 
+def register(): 
     if request.method == 'POST':
-        key = request.form['username']
-        print(key)
-        a = pycode.login()
+        uname = request.form['username']
+        print(uname)
+        a = pycode.reg(uname)
         print(a)
-        if request.form['username'] != 'admin':
-            error = 'Invalid Credentials. Please try again.'
+        if a == 1:
+            print("successful registration")
         else:
-            return redirect(url_for('dashboard'))
-    return render_template("register.html", user=user)
+            return redirect(url_for('register'))
+    return render_template("register.html")
 
 
 @app.route("/")
@@ -92,7 +94,7 @@ def subcategory(category):
     if category == "java":
         return render_template('java.html')
 
-    elif category == "android":
+    elif category == "anregister/droid":
         if request.method == 'POST':
             num = request.form['score']
             print(type(num))
@@ -105,7 +107,7 @@ def subcategory(category):
     elif category == "cloud":
         return render_template('cloud.html')
 
-    elif category == "proeng":
+    elif category == "prregister/oeng":
         return render_template('profeng.html')
 
     elif category == "dsp":

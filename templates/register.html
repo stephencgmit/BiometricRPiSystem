@@ -1,4 +1,16 @@
+<!--<!DOCTYPE html>-->
+<!--{% if user %}-->
+    <!--<h1>Hello {{user}}</h1>-->
+<!--{% else %}-->
+    <!--<h1>Please log in</h1>-->
+<!--{% endif %}-->
 
+<!--<!DOCTYPE html>-->
+<!--{% if user %}-->
+    <!--<h1>Hello {{user}}</h1>-->
+<!--{% else %}-->
+    <!--<h1>Please log in</h1>-->
+<!--{% endif %}-->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -7,30 +19,40 @@
     <title>Register</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+  	<link rel=stylesheet type=text/css href="{{url_for('static', filename='style.css')}}">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 </head>
 
 <body>
+<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home"></span> RPi-College</a>
+			</div>
+			<ul class="nav navbar-nav">
 
+				<li><a href="/"><span class="glyphicon glyphicon-new-window"></span> Log-Out</a></li>
+			</ul>
+		</div>
+	</nav>
 <div class="jumbotron text-center">
     <div class="container">
-        <h1>Student Registration Page</h1>
-  <p>Please place finger on scanner when registering!</p>
+        <h1>Student Register Page</h1>
+  <p>Please enter details to register!</p>
     </div>
 </div>
 
 <div class="container">
-    <form action="" method='POST">
-        <div class="form-group">
-            <label for="usr">Name:</label>
-            <input type="text" class="form-control" placeholder="Username" name="username" >
-		<input class="btn btn-default" type="submit" value="Login">
+
         </div>
-	</form>
-        <label for="finger">Select Finger :</label>
-        <div class="row">
-        <div class="col-lg-3">
-             <div class="form-group">
-                  <select class="form-control" id="finger">
+              <form action="" method="post">
+                          <label for="finger">Select Finger :</label>
+                  <div class="form-group">
+                  <select class="form-control" id="finger" size="6px">
                         <option value="rightthumb">Right Thumb</option>
                         <option value="leftthumb">Left Thumb</option>
                         <option value="leftmidfinger">Left MidFinger</option>
@@ -39,22 +61,14 @@
                         <option value="rightindexfinger">Right IndexFinger</option>
                   </select>
              </div>
-        </div>
-            <div class="col-lg-2">
-              <div class="form-group">
-                   <button type="button" class="btn btn-primary">Fetch FingerPrint</button>
-              </div>
-            </div>
-              <div class="col-lg-2">
-                    <div class="form-group">
-                    <button type="button" class="btn btn-warning">Save FingerPrint</button>
+                <input type="text" placeholder="Username" class="form__input" name="username" value="{{ request.form.username }}">
+                <h2>Place Finger Over Scanner When Logging In</h2>
+        <input class="btn btn-default" class="form__btn" type="submit" value="Login">
+      </form>
               </div>
               </div>
         </div>
         <br><br>
-        <div class="form-group">
-          <button type="submit" class="btn btn-danger">Submit</button>
-        </div>
     </form>
 </div>
 </body>
