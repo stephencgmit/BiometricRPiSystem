@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>User</title>
+	<meta charset="utf-8">
+	<link rel=stylesheet type=text/css href="{{url_for('static', filename='style.css')}}">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home"></span> RPi-College</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li><a href="/profile/{{ currentuser }}"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
+			
+			</ul>
+		</div>
+	</nav>
+	<div class="container">
+		<div class="row">
+        <div class="container">
+    <form action="" method="POST">
+        <div class="form-group">
+            <label for="usr">Username:</label>
+            <input type="text" 
+            class="form-control" 
+            placeholder="Username" 
+            name="username" 
+            value="{{request.form.username}}">
+        <input class="btn btn-default" type="submit" value="Login">
+
+        </div>
+        </form>
+        <label for="finger">Select Finger :</label>
+        <div class="row">
+        <div class="col-lg-3">
+             <div class="form-group">
+                  <select class="form-control" id="finger">
+                        <option value="rightthumb">Right Thumb</option>
+                        <option value="leftthumb">Left Thumb</option>
+                        <option value="leftmidfinger">Left MidFinger</option>
+                        <option value="rightmidfinger">Right MidFinger</option>
+                        <option value="leftindexfinger">Left IndexFinger </option>
+                        <option value="rightindexfinger">Right IndexFinger</option>
+                  </select>
+             </div>
+        </div>
+            <div class="col-lg-2">
+              <div class="form-group">
+                   <button type="button" class="btn btn-primary">Keep Finger on Scanner once you press submit</button>
+              </div>
+            </div>
+              </div>
+  
+        <div class="form-group">
+          <button type="submit" class="btn btn-danger">Submit</button>
+        </div>
+			</div>
+		</div>
+	</div><br/><br/>
+	<div class="jumbotron" style="background-color: black;">
+		<p style="text-align: center; color: white;">&copy; 2019 RPi-College. All rights reserved.</p>
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

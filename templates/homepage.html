@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Homepage</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel=stylesheet type=text/css href="{{url_for('static', filename='style.css')}}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <span text='tagline'><b>BIOMETRIC COLLEGE LOGIN SYSTEM</b></span>
+      </div>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li style="padding-top: 1vw;"><a href='/register'><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      <li style="padding-top: 1vw;"><a href='/login'><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="container">
+
+  <div class="jumbotron" id="readme">
+      <h1>Welcome to Raspberry Pi College</h1>
+    <p>This is a biometric login system online quiz portal that is capable of making a user database and hosting online question rounds whose results are then used to generate real time leaderboards. Questions and other internal data can only be updated by the admins.</p>
+    <h3 class="subhead">Functionality</h3>
+    <ul>
+      <li><i>Biometric logins from different locations where system is set up</i></li>
+      <li><i>Easy sign-up and login</i></li>
+      <li><i>Different modules with questions</i></li>
+    </ul>
+  </div>
+
+</div>
+
+</body>
+</html>

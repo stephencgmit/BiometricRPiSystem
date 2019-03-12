@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Welcome</title>
+	<meta charset="utf-8">
+	<link rel=stylesheet type=text/css href="{{url_for('static', filename='style.css')}}">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<!-- Materialise CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+</head>
+<body>
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home"></span> RPi</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li><a href="/profile/{{ currentuser }}"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
+				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-th-list"></span> Modules<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="/module/java"><span class="glyphicon glyphicon-book"></span> Java</a></li>
+						<li><a href="/module/android"><span class="glyphicon glyphicon-knight"></span> Android App Development</a></li>
+						<li><a href="/module/cpp"><span class="glyphicon glyphicon-bullhorn"></span> C++</a></li>
+						<li><a href="/module/cloud"><span class="glyphicon glyphicon-film"></span> Cloud Computing</a></li>
+						<li><a href="/module/proeng"><span class="glyphicon glyphicon-tint"></span> The Professional Engineer</a></li>
+						<li><a href="/module/dsp"><span class="glyphicon glyphicon-flag"></span> DSP</a></li>
+     					<li><a href="/module/python"><span class="glyphicon glyphicon-flag"></span> Python</a></li>
+						<li><a href="/module/javascript"><span class="glyphicon glyphicon-flag"></span> Javascript</a></li>
+						<li><a href="/module/nodejs"><span class="glyphicon glyphicon-flag"></span> Node.js</a></li>
+						<li><a href="/module/maths"><span class="glyphicon glyphicon-flag"></span> Maths</a></li>
+					</ul>
+				</li>
+				<li><a href="http://127.0.0.1:5000/leaderboard/globalrank"><span class="glyphicon glyphicon-sort-by-attributes-alt"></span> Leaderboards</a></li>
+				<li><a href="/user/sign-out"><span class="glyphicon glyphicon-new-window"></span> Log-Out</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<br/>
+	<div class="row">
+
+		<div class="col s12 m6">
+			<div class="card">
+				<div class="card-image">
+					<img src="../static/Literature.jpeg" alt="java">
+					<span class="card-title"><b>J A V A</b></span>
+					<a class="btn-floating halfway-fab" href="/module/java"><i class="material-icons" style="background-color: orange;">add</i></a>
+				</div>
+				<div class="card-content">
+					<p><i>"Java is a general-purpose computer-programming language that is concurrent, class-based, object-oriented, and specifically designed to have as few implementation dependencies as possible"pull-right">- wiki</i></p>
+				</div>
+			</div>
+		</div>
+
+		<div class="col s12 m6">
+			<div class="card">
+				<div class="card-image">
+					<img src="../static/History.jpeg" alt="Android">
+					<span class="card-title"><b>A N D R O I D</b></span>
+					<a class="btn-floating halfway-fab" href="/module/android"><i class="material-icons" style="background-color: brown">add</i></a>
+				</div>
+				<div class="card-content">
+					<p><i>"  FOR SOME UNKNOWN REASON.</i></p>
+					<p class="pull-right">- Mike Murray</p>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="row">
+
+		<div class="col s12 m6">
+			<div class="card">
+				<div class="card-image">
+					<img src="../static/Currentaffairs.jpeg" alt="C++">
+					<span class="card-title"><b>C + +</b></span>
+					<a class="btn-floating halfway-fab" href="/module/cpp"><i class="material-icons" style="background-color: #b36200;">add</i></a>
+				</div>
+				<div class="card-content">
+					<p><i>"C++ is a general-purpose programming language. It has imperative, object-oriented and generic programming features, while also providing facilities for low-level memory manipulation"</i></p>
+					<p class="pull-right">- Bjarne Stroustrup</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="col s12 m6">
+			<div class="card">
+				<div class="card-image">
+					<img src="../static/Movies.jpeg" alt="Cloud">
+					<span class="card-title"><b>C L O U D</b></span>
+					<a class="btn-floating halfway-fab" href="/module/cloud"><i class="material-icons" style="background-color: #99cc00;">add</i></a>
+				</div>
+				<div class="card-content">
+					<p><i>"Cloud computing makes computer system resources, especially storage and computing power, available on demand without direct active management by the user. The term is generally used to describe data centers available to many users over the Internet."</i></p>
+					<p class="pull-right">- from <i>wiki</i></p>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="row">
+		<div class="col s12 m6">
+			<div class="card">
+				<div class="card-image">
+					<img src="../static/Science.jpeg" alt="The Professional Engineer">
+					<span class="card-title"><b>The Professional Engineer</b></span>
+					<a class="btn-floating halfway-fab" href="/module/proeng"><i class="material-icons" style="background-color: purple;">add</i></a>
+				</div>
+				<div class="card-content">
+					<p><i>"Kenny's".</i></p>
+					<p class="pull-right">- Marto Hoary</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="col s12 m6">
+			<div class="card">
+				<div class="card-image">
+					<img src="../static/Sports.jpeg" alt="DSP">
+					<span class="card-title"><b>DIGITAL SIGNAL PROCESSING</b></span>
+					<a class="btn-floating halfway-fab" href="/module/dsp"><i class="material-icons" style="background-color: #ff1a1a;">add</i></a>
+				</div>
+				<div class="card-content">
+					<p><i>"Digital signal processing is the use of digital processing, such as by computers or more specialized digital signal processors, to perform a wide variety of signal processing operations."</i></p>
+					<p class="pull-right">- Michael Jordan</p>
+				</div>
+			</div>
+		</div>      
+
+				<div class="col s12 m6">
+			<div class="card">
+				<div class="card-image">
+					<img src="../static/Sports.jpeg" alt="PYTHON">
+					<span class="card-title"><b>P Y T H O N</b></span>
+					<a class="btn-floating halfway-fab" href="/module/python"><i class="material-icons" style="background-color: #ff1a1a;">add</i></a>
+				</div>
+				<div class="card-content">
+					<p><i>"Python is an interpreted, high-level, general-purpose programming language. "</i></p>
+					<p class="pull-right">- wiki</p>
+				</div>
+			</div>
+		</div>
+		<div class="col s12 m6">
+			<div class="card">
+				<div class="card-image">
+					<img src="../static/Sports.jpeg" alt="Nodejs">
+					<span class="card-title"><b>N O D E J S</b></span>
+					<a class="btn-floating halfway-fab" href="/module/nodejs"><i class="material-icons" style="background-color: #ff1a1a;">add</i></a>
+				</div>
+				<div class="card-content">
+					<p><i>"Node.js is an open-source, cross-platform JavaScript run-time environment that executes JavaScript code outside of a browser."</i></p>
+					<p class="pull-right">- wiki</p>
+				</div>
+			</div>
+		</div>
+		<div class="col s12 m6">
+			<div class="card">
+				<div class="card-image">
+					<img src="../static/Sports.jpeg" alt="Javascript">
+					<span class="card-title"><b> J A V A S C R I P T</b></span>
+					<a class="btn-floating halfway-fab" href="/module/javascript"><i class="material-icons" style="background-color: #ff1a1a;">add</i></a>
+				</div>
+				<div class="card-content">
+					<p><i>"Alongside HTML and CSS, JavaScript is one of the three core technologies of the World Wide Web. JavaScript enables interactive web pages and thus is an essential part of web applications. The vast majority of websites use it"</i></p>
+					<p class="pull-right">- Michael Jordan</p>
+				</div>
+			</div>
+		</div>
+		<div class="col s12 m6">
+			<div class="card">
+				<div class="card-image">
+					<img src="../static/Sports.jpeg" alt="maths">
+					<span class="card-title"><b>M A T H S</b></span>
+					<a class="btn-floating halfway-fab" href="/module/maths"><i class="material-icons" style="background-color: #ff1a1a;">add</i></a>
+				</div>
+				<div class="card-content">
+					<p><i>"Mathematics includes the study of such topics as quantity, structure, space, and change. Mathematicians seek and use patterns to formulate new conjectures; they resolve the truth or falsity of conjectures by mathematical proof."</i></p>
+					<p class="pull-right">- Wiki</p>
+				</div>
+			</div>
+		</div>
+
+	</div><br/><br/>
+	<div style="background-color: black;">
+		<p style="text-align: center; color: white;">&copy; 2019 RPi. All rights reserved.</p>
+	</div><br/>
+</body>
+</html>
