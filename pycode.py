@@ -44,7 +44,6 @@ def login():
         else:
             print('Found template at position #' + str(positionNumber))
             print('The accuracy score is: ' + str(accuracyScore))
-        f.loadTemplate(positionNumber, 0x01)
     except Exception as e:
         print('Operation failed!')
         print('Exception message: ' + str(e))
