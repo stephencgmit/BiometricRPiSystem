@@ -18,7 +18,7 @@ client = MongoClient("mongodb://fpDBuser:project2019@fingerprintproject-shard-00
                      "FingerprintProject-shard-0&authSource=admin&retryWrites=true")
 
 mydb = client['fingerprint_project']
-connect_to_collection = mydb['students']
+students = mydb['students']
 scores = mydb['scores']
 
 app = Flask(__name__)
@@ -28,13 +28,14 @@ app.secret_key = os.urandom(24)     # generate random string to encrypt cookie a
 template_dir = os.path.join(os.path.dirname("__file__"), 'templates')
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir))
 
-username = ''
+user = {}
 items = []
 
 
 @app.route("/")
 def home():
     #flash("Hellooooooooo")
+    session['user'] = ''
     return render_template("homepage.html")
 
 # Route for handling the login page logic
@@ -52,19 +53,21 @@ def login():
         print(username)
         session['user'] = request.form['username']
         a = pycode.login()
-        print(a)
-        if request.form['username'] != 'admin':
-            error = 'Invalid Credentials. Please try again.'
+        mongo_query = {"username": username}
+        user = {'username': g.user}
+        search = students.find(mongo_query)
+        print(search.count()) # check number of returned usernames from mongo
+        if(search.count() == 0):
+            return redirect(url_for('homepage'))
         else:
             return redirect(url_for('dashboard'))
-
     return render_template('login_template.html', error=error)
 
 
-@app.route("/")
 @app.route("/homepage")
 def homepage(user=None):
-    return render_template("homepage.html", user=user)
+    session['user'] = ''
+    return render_template("homepage.html")
 
 
 @app.before_request
@@ -74,7 +77,6 @@ def before_request():
         g.user = session['user']
 
 
-@app.route("/")
 @app.route("/register/", methods=['GET','POST'])
 def register(): 
     if request.method == 'POST':
@@ -88,7 +90,6 @@ def register():
             return redirect(url_for('register'))
     return render_template("register.html")
 
-@app.route("/")
 @app.route("/profile/")
 def profile():
     if g.user:
@@ -96,7 +97,7 @@ def profile():
         user = {'username': g.user}
         print(user)
         return render_template("user.html", user=user)
-    return redirect(url_for('dashboard'))
+    return redirect(url_for('homepage'))
 
 
 @app.route('/getsession')
@@ -113,71 +114,70 @@ def dropsession():
 @app.route("/")
 @app.route("/dashboard")
 def dashboard():
-    return render_template("dashboard.html")
+    user = {'username': g.user}
+    return render_template("dashboard.html", user=user)
 
 
-@app.route("/")
 @app.route("/user")
 def user():
     return render_template("user.html")
 
-@app.route("/")
 @app.route("/leaderboard")
 def leaderboard():
-    items = []
-    for x in scores.find({}, {"_id": 0}).sort("score1", -1):
-        print(x)
-        items.append(x)
-    #items = dict(zip(doc[::2],doc[1::2]))
-    template = jinja_env.get_template('leaderboard.html')
-    return template.render(items=items)
+    if g.user:
+        user = {'username': g.user}
+        items = []
+        print(user)
+        for x in scores.find({}, {"_id": 0}).sort("score1", -1):
+            print(x)
+            items.append(x)
+        #items = dict(zip(doc[::2],doc[1::2]))
+        template = jinja_env.get_template('leaderboard.html')
+        return template.render(items=items, user=user)
+    return render_template("homepage.html")
 
 
-
-@app.route("/")
 @app.route("/loggedin")
 def loggedin():
     return render_template("loggedin.html")
 
 
-
-
-@app.route('/')
 @app.route('/module/<category>', methods=["GET","POST"])
 def subcategory(category):
+    user = {'username': g.user}
     if category == "java":
-        return render_template('java.html')
+        return render_template('/modules/java.html', user=user)
 
-    elif category == "anregister/droid":
+    elif category == "android":
         if request.method == 'POST':
             num = request.form['score']
             print(type(num))
             print(num)
-        return render_template('android.html')
+        return render_template('/modules/android.html', user=user)
 
     elif category == "cpp":
-        return render_template('cpp.html')
+        return render_template('/modules/cpp.html', user=user)
 
     elif category == "cloud":
-        return render_template('cloud.html')
+        return render_template('/modules/cloud.html' , user=user)
 
-    elif category == "prregister/oeng":
-        return render_template('profeng.html')
+    elif category == "proeng":
+        return render_template('/modules/profeng.html', user=user)
 
     elif category == "dsp":
-        return render_template('dsp.html')
+        return render_template('/modules/dsp.html', user=user)
 
     elif category == "python":
-        return render_template('python.html')
+        return render_template('/modules/python.html', user=user)
 
     elif category == "javascript":
-        return render_template('javascript.html')
+        return render_template('/modules/javascript.html', user=user)
 
     elif category == "nodejs":
-        return render_template('nodejs.html')
+        return render_template('/modules/nodejs.html', user=user)
 
     elif category == "math":
-        return render_template('math.html')
+        return render_template('/modules/math.html', user=user)
 
 
 
