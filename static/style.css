@@ -34,7 +34,7 @@ html {
 
 body {
   margin: 0;
-  padding-top: 2.5em; }
+}
 
 article,
 aside,
@@ -289,16 +289,16 @@ footer {
     margin-top: 1.375em; }
 
 .panel, .panel--centered {
-  padding-top: 1.875em; }
+  padding-top: 0em; }
   @media (min-width: 769px) {
     .panel, .panel--centered {
       padding-bottom: 1.25em; } }
 
 .panel--padded, .panel--padded--centered {
-  padding-top: 2.125em; }
+  padding-top: 0em; }
   @media (min-width: 769px) {
     .panel--padded, .panel--padded--centered {
-      padding-top: 5em;
+      padding-top: 0em;
       padding-bottom: 2.125em; } }
 
 .grid {
@@ -338,7 +338,7 @@ footer {
 @media (min-width: 1px) and (max-width: 768px) {
   [class^="grid__col--"] {
     margin-top: 0.75em;
-    margin-bottom: 0.75em; } }
+    margin-bottom: 0em; } }
 @media (min-width: 769px) {
   [class^="grid__col--"] {
     float: left;
@@ -408,7 +408,6 @@ h2, .headline-secondary, .headline-secondary--grouped {
 
 .menu__link, .menu__link--end {
   display: block;
-  padding-top: 1em;
   padding-bottom: 1em;
   color: #fff;
   text-align: center;
@@ -441,7 +440,6 @@ h2, .headline-secondary, .headline-secondary--grouped {
 .headline-secondary {
   margin-bottom: 0.91667em; }
   .headline-secondary--grouped {
-    margin-top: 0.41667em;
     margin-bottom: 2.25em; }
 
 .form__label {
@@ -487,11 +485,9 @@ h2, .headline-secondary, .headline-secondary--grouped {
   position: relative; }
   @media (min-width: 769px) {
     .navbar {
-      margin-top: 3.375em;
       margin-bottom: 0; } }
 
 .nav {
-  margin-top: 1.25em;
   margin-bottom: 1.875em; }
   .nav__item a {
     color: #797e83; }
@@ -503,8 +499,6 @@ h2, .headline-secondary, .headline-secondary--grouped {
   background: #39add1;
   background: linear-gradient(45deg, rgba(94, 206, 127, 0.8) 0%, #39add1 100%); }
 
-.menu {
-  margin-top: 1.25em; }
   .menu__link {
     border-bottom: solid 1px rgba(255, 255, 255, 0.3); }
 

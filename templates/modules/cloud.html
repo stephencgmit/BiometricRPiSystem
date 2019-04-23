@@ -1,7 +1,8 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Java</title>
+	<title>Cloud Computing</title>
 	<meta charset="utf-8">
 	<link rel=stylesheet type=text/css href="{{url_for('static', filename='style.css')}}">
 	<!-- Bootstrap CSS -->
@@ -13,10 +14,12 @@
 	<nav class="navbar navbar-inverse">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home"></span> Rasp Pi</a>
+				<a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home"></span> Raspberry Pi</a>
 			</div>
 			<ul class="nav navbar-nav">
 				<li><a href="/profile/{{ currentuser }}"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
+								<li><a href="/dashboard"><span class="glyphicon glyphicon-user"></span>Homepage</a></li>
+
 				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-th-list"></span> Modules<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="/module/java"><span class="glyphicon glyphicon-book"></span> Java</a></li>
@@ -31,8 +34,8 @@
 						<li><a href="/module/maths"><span class="glyphicon glyphicon-flag"></span> Maths</a></li>
 					</ul>
 				</li>
-				<li><a href="http://127.0.0.1:5000/leaderboard/globalrank"><span class="glyphicon glyphicon-sort-by-attributes-alt"></span> Leaderboards</a></li>
-				<li><a href="/user/sign-out"><span class="glyphicon glyphicon-new-window"></span> Log-Out</a></li>
+				<li><a href="http://127.0.0.1:5000/leaderboard"><span class="glyphicon glyphicon-sort-by-attributes-alt"></span> Leaderboards</a></li>
+				<li><a href="/"><span class="glyphicon glyphicon-new-window"></span> Log-Out</a></li>
 			</ul>
 		</div>
 	</nav>
@@ -41,7 +44,7 @@
 			<div class="col-sm-12 col-md-6">
 				<div class="grid">
 					<div id="quiz" class="centered grid__col--8">
-						<h1>Java Quiz</h1>
+						<h1>Cloud Computing Quiz</h1>
 
 							<h2 id="question" class="headline-secondary--grouped"></h2>
 
@@ -65,11 +68,11 @@
 			</div>
 		</div>
 	<!--{{score}}-->
-							<script src="{{ url_for('static', filename='java.js') }}"> </script><br/><br/>
+							<script src="{{ url_for('static', filename='cloud.js') }}"> </script><br/><br/>
 
 	<br/><br/>
 	<div class="jumbotron" style="background-color: black;">
-		<p style="text-align: center; color: white;">&copy; 2019 Rasp Pi. All rights reserved.</p>
+		<p style="text-align: center; color: white;">&copy; 2019 RPi College. All rights reserved.</p>
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

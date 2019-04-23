@@ -1,9 +1,13 @@
-from flask import Flask, render_template, flash, request, url_for, redirect
+from flask import Flask, render_template, flash, request, url_for, redirect, session, g
 #from flask_user import login_required, UserManager, UserMixin, SQLAlchemyAdapter, current_user
 import json
 from pymongo import MongoClient
 import time
 from random import shuffle
+import jinja2
+import os
+from flask_login import LoginManager, UserMixin
+from flask_login import current_user, login_user
 from pyfingerprint import *
 import pycode 
 
@@ -15,9 +19,17 @@ client = MongoClient("mongodb://fpDBuser:project2019@fingerprintproject-shard-00
 
 mydb = client['fingerprint_project']
 connect_to_collection = mydb['students']
+scores = mydb['scores']
 
 app = Flask(__name__)
+app.secret_key = os.urandom(24)     # generate random string to encrypt cookie and decrypt
 
+
+template_dir = os.path.join(os.path.dirname("__file__"), 'templates')
+jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir))
+
+username = ''
+items = []
 
 
 @app.route("/")
@@ -35,8 +47,10 @@ def home():
 def login():
     error = None
     if request.method == 'POST':
-        key = request.form['username']
-        print(key)
+        session.pop('user', None)
+        username=request.form['username']
+        print(username)
+        session['user'] = request.form['username']
         a = pycode.login()
         print(a)
         if request.form['username'] != 'admin':
@@ -53,6 +67,13 @@ def homepage(user=None):
     return render_template("homepage.html", user=user)
 
 
+@app.before_request
+def before_request():
+    g.user = None
+    if 'user' in session:
+        g.user = session['user']
+
+
 @app.route("/")
 @app.route("/register/", methods=['GET','POST'])
 def register(): 
@@ -67,6 +88,27 @@ def register():
             return redirect(url_for('register'))
     return render_template("register.html")
 
+@app.route("/")
+@app.route("/profile/")
+def profile():
+    if g.user:
+        print(g.user)
+        user = {'username': g.user}
+        print(user)
+        return render_template("user.html", user=user)
+    return redirect(url_for('dashboard'))
+
+
+@app.route('/getsession')
+def getsession():
+    if 'user' in session:
+        return session['user']
+    return 'Not Logged in'
+
+@app.route('/dropsession')
+def dropsession():
+    session.pop('user', None)
+    return 'Dropped!'
 
 @app.route("/")
 @app.route("/dashboard")
@@ -78,6 +120,18 @@ def dashboard():
 @app.route("/user")
 def user():
     return render_template("user.html")
+
+@app.route("/")
+@app.route("/leaderboard")
+def leaderboard():
+    items = []
+    for x in scores.find({}, {"_id": 0}).sort("score1", -1):
+        print(x)
+        items.append(x)
+    #items = dict(zip(doc[::2],doc[1::2]))
+    template = jinja_env.get_template('leaderboard.html')
+    return template.render(items=items)
+
 
 
 @app.route("/")

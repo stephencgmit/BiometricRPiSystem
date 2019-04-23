@@ -6,8 +6,6 @@ import tempfile
 import hashlib
 import time
 
-
-
 client = MongoClient("mongodb://fpDBuser:project2019@fingerprintproject-shard-00-00-2ee1v.mongodb."
                      "net:27017,fingerprintproject-shard-00-01-2ee1v.mongodb.net:27017,"
                      "fingerprintproject-shard-00-02-2ee1v.mongodb.net:27017/test?ssl=true&replicaSet="
@@ -40,10 +38,12 @@ def login():
         temp = positionNumber
         if ( positionNumber == -1 ):
             print('No match found! Try again')
-            login()
+            time.sleep(0.5)
+            #login()
         else:
             print('Found template at position #' + str(positionNumber))
             print('The accuracy score is: ' + str(accuracyScore))
+            #return 0
     except Exception as e:
         print('Operation failed!')
         print('Exception message: ' + str(e))
@@ -51,6 +51,7 @@ def login():
     
     if ( positionNumber == -1 ):
         print('No match found! Try again')
+        time.sleep(0.5)
         login()
     else:
         result= 10
