@@ -108,17 +108,27 @@ def reg(username):
     positionNumber = f.storeTemplate()
     temp=[]
     temp=f.downloadCharacteristics(0x01)
-    
+    x = []
     x = coll.find_one(sort=[("uid", -1)])
-    last_user = x['uid']
-    next_user = last_user + 1
-    new_user = {}
-    new_user["uid"] = next_user
-    new_user["image_template"] = temp
-    new_user["user_name"] = uname
-    #new_user = {"uid": next_user, "image_template": last_template, "user_name": uname}
-    coll.insert_one(new_user)
-    
+    print(x)
+    if x is None:
+        new_user = {}
+        new_user["uid"] = 0
+        new_user["image_template"] = temp
+        new_user["username"] = uname
+        #new_user = {"uid": next_user, "image_template": last_template, "user_name": uname}
+        coll.insert_one(new_user)
+    else:
+        last_user = x['uid']
+        print("last user" + str(last_user))
+        next_user = last_user + 1
+        new_user = {}
+        new_user["uid"] = next_user
+        new_user["image_template"] = temp
+        new_user["username"] = uname
+        #new_user = {"uid": next_user, "image_template": last_template, "user_name": uname}
+        coll.insert_one(new_user)
+        
     return 1
 
 def mongo_tests():
