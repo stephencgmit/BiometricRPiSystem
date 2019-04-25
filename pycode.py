@@ -54,8 +54,7 @@ def login():
         time.sleep(0.5)
         login()
     else:
-        result= 10
-        return(result)
+        return temp
 
 def reg(username):
     uname = username
@@ -130,6 +129,51 @@ def reg(username):
         coll.insert_one(new_user)
         
     return 1
+
+
+def verify_test(pos):
+    try:
+        f = PyFingerprint('/dev/ttyUSB0', 57600, 0xFFFFFFFF, 0x00000000)
+
+        if ( f.verifyPassword() == False ):
+            raise ValueError('The given fingerprint sensor password is wrong!')
+
+    except Exception as e:
+        print('The fingerprint sensor could not be initialized!')
+        print('Exception message: ' + str(e))
+        exit(1)
+
+    print('Currently used templates: ' + str(f.getTemplateCount()) +'/'+ str(f.getStorageCapacity()))
+    time.sleep(1)
+    try:
+        while ( f.readImage() == False ):
+            pass
+        f.convertImage(0x01)
+        result = f.searchTemplate() ## Searchs template
+        positionNumber = result[0]
+        accuracyScore = result[1]
+        temp = positionNumber
+        if ( positionNumber == -1 ):
+            print('No match found! Try again')
+            time.sleep(0.5)
+            #login()
+        else:
+            print('Found template at position #' + str(positionNumber))
+            print('The accuracy score is: ' + str(accuracyScore))
+            #return 0
+    except Exception as e:
+        print('Operation failed!')
+        print('Exception message: ' + str(e))
+        exit(1)
+    
+    if ( positionNumber == -1 ):
+        print('No match found! Try again')
+        time.sleep(0.5)
+        login()
+    else:
+        return positionNumber
+    
+    
 
 def mongo_tests():
     #mydict = {"name": "Stephen"}

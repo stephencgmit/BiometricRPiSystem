@@ -22,15 +22,17 @@ students = mydb['students']
 scores = mydb['scores']
 
 app = Flask(__name__)
-app.secret_key = os.urandom(24)     # generate random string to encrypt cookie and decrypt
 
+app.secret_key = os.urandom(24)     # generate random string to encrypt cookie and decrypt
 
 template_dir = os.path.join(os.path.dirname("__file__"), 'templates')
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir))
 
 user = {}
 items = []
-
+position_number = 0
+global last_login_fp
+last_login_fp = 0
 
 @app.route("/")
 def home():
@@ -52,16 +54,23 @@ def login():
         username=request.form['username']
         print(username)
         session['user'] = request.form['username']
-        a = pycode.login()
+        last_login_fp = pycode.login() # variable used to track last login fingerprint
+        print('uid =' + str(last_login_fp))
         mongo_query = {"username": username}
-        user = {'username': g.user}
         search = students.find(mongo_query)
+        f = open("/home/pi/Desktop/FlaskTutorial/log.txt", "w")
+        f.write(str(last_login_fp))
+        f.close()
+        #user = {'username': mongo_query['username'], 'uid': a}
+        print(search)
         print(search.count()) # check number of returned usernames from mongo
         if(search.count() == 0):
+            print('USER NOT FOUND IN MONGODB')
+            #flash('user not found')
             return redirect(url_for('homepage'))
         else:
             return redirect(url_for('dashboard'))
-    return render_template('login_template.html', error=error)
+    return render_template('login.html', error=error)
 
 
 @app.route("/homepage")
@@ -122,7 +131,7 @@ def dashboard():
 def user():
     return render_template("user.html")
 
-@app.route("/leaderboard")
+@app.route("/leaderboard")# using jinja templating to render scores from mongo
 def leaderboard():
     if g.user:
         user = {'username': g.user}
@@ -139,7 +148,7 @@ def leaderboard():
 
 @app.route("/loggedin")
 def loggedin():
-    return render_template("loggedin.html")
+    return render_template("login.html")
 
 
 @app.route('/module/<category>', methods=["GET","POST"])
@@ -151,8 +160,25 @@ def subcategory(category):
     elif category == "android":
         if request.method == 'POST':
             num = request.form['score']
+            quiz = request.form['android']
             print(type(num))
             print(num)
+            print(quiz)
+            print("last login fingerprint = ")
+            f = open("/home/pi/Desktop/FlaskTutorial/log.txt", "r")
+            last_login_fp = f.readline()
+            print(last_login_fp)
+            verify = pycode.verify_test(last_login_fp)
+            print("verify = " + str(verify))
+            print("last_login_fp = " + last_login_fp)
+            if (str(verify) == last_login_fp):
+                print("fingerprint verified")
+            else:
+                print("fingerprint not verified")
+            # score is printed here after post.
+            # verify user is still the last person who logged in. modify pycode.py
+            # insert the score variable for the quiz to mongodb
+            # Render profile page and see the score on the page. TODO.
         return render_template('/modules/android.html', user=user)
 
     elif category == "cpp":

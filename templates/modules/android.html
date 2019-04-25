@@ -60,19 +60,24 @@
 <!--					<p id="progress">Question x of y</p>-->
 <!--						<p id="score"></p>-->
 
-					<script src="{{url_for('static', filename='android.js')}}">
+					
     				// Do something once posted.
 					</script>
-					<script>
-																	let myVar = 'Hello'
-				$.post('http://localhost:5000/module/android', {myVar}, function(){
-					})
-
-					</script>
-
+					<div style="padding: 20px"></div>
+              <form action="" method="post">
+                  <div class="form-group">
+                <input type="text" placeholder="Score" class="form__input" name="score" value="{{ request.form.score }}">
+                <input type="hidden" id="android" name="android" value="android">
+        <input class="btn btn-default" class="form__btn" type="submit" value="Submit Score">
+      </form>
 
 				</div>
+									<div style="padding: 200px"></div>
+
 				        <footer>
+	<div class="jumbotron" style="background-color: black;">
+		<p style="text-align: center; color: white;">&copy; 2018 RPi. All rights reserved.</p>
+	</div>
 
 						</footer>
 						<!--<form method="post" form action="">-->
@@ -83,9 +88,7 @@
 					</div>
 				</div>
 		<br/><br/>
-	<div class="jumbotron" style="background-color: black;">
-		<p style="text-align: center; color: white;">&copy; 2018 RPi. All rights reserved.</p>
-	</div>
+		<script src="{{url_for('static', filename='android.js')}}">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>

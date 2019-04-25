@@ -6,6 +6,13 @@ function Quiz(questions) {
     this.currentQuestionIndex = 0;
 }
 
+function myFunction(score){
+	var x = document.createElement("INPUT");
+	x.setAttribute("type", "text");
+	x.setAttribute("value", score);
+	document.body.appendChild(x);
+}
+
 Quiz.prototype.guess = function(answer) {
     if(this.getCurrentQuestion().isCorrectAnswer(answer)) {
         this.score++;
@@ -65,10 +72,7 @@ var QuizUI = {
         gameOverHTML += "<h2> Your score is: " + quiz.score + "</h2>";
         this.populateIdWithHTML("quiz", gameOverHTML);
         this.populateIdWithHTML("score", quizScore);
-        this.populateIdWithHTML("score1", quizScore);
-        this.populateIdWithHTML("score2", quizScore);
-        this.populateIdWithHTML("score3", quizScore);
-        this.populateIdWithHTML("score4", quizScore);
+	myFunction(quizScore);
 
 
     },
