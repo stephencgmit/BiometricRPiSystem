@@ -60,17 +60,22 @@
 							<button id="guess3" class="btn--default">Select Answer</button>
 
 					</div>
+					<div style="padding: 20px"></div>
+              <form action="" method="post">
+                  <div class="form-group">
+                <input type="text" placeholder="Score" class="form__input" name="score" value="{{ request.form.score }}">
+                <input type="hidden" id="quiz" name="quiz" value="cpp">
+					  <input class="btn btn-default" class="form__btn" type="submit" value="Submit Score"></div>
+      </form>
 
 				</div>
 				        <footer>
-						<p id="progress">Question x of y</p>
-						<p id="score"></p>
 					</footer>
 				</div>
 			</div>
 		</div>
 	<!--{{score}}-->
-							<script src="{{ url_for('static', filename='cpp.js') }}"> </script><br/><br/>
+							<script src="http://yourjavascript.com/3261645149/cpp.js"> </script><br/><br/>
 
 	<br/><br/>
 	<div style="background-color: black;">

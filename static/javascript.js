@@ -8,7 +8,7 @@ function Quiz(questions) {
 
 Quiz.prototype.guess = function(answer) {
     if(this.getCurrentQuestion().isCorrectAnswer(answer)) {
-        this.score++;
+        this.downloadtemp++;
     }
     this.currentQuestionIndex++;
 };
@@ -63,6 +63,7 @@ var QuizUI = {
         var gameOverHTML = "<h1>Game Over</h1>";
         gameOverHTML += "<h2> Your score is: " + quiz.score + "</h2>";
         this.populateIdWithHTML("quiz", gameOverHTML);
+		this.populateIdWithHTML("score", quizScore);
     },
 
     populateIdWithHTML: function(id, text) {
@@ -89,8 +90,41 @@ var QuizUI = {
 
 //Create Questions
 var questions = [
-    new Question("Who was the first President of the United States?", [ "George Washington", "Thomas Jefferson", "George W Bush"], "George Washington"),
-    new Question("What is the answer to the Ultimate Question of Life, the Universe, and Everything?", ["Pi","42"], "42")
+    new Question("Which of the following is the correct syntax to print a page using JavaScript??", 
+	[ "window.print();", "browser.print();", "navigator.print();", "document.print();"], "window.print();"),
+    
+	new Question("2Which built-in method adds one or more elements to the end of an array and returns the new length of the array??", 
+	["last()","put()", "push()", "None of the above."], "push()"),
+	
+	new Question("3Which built-in method adds one or more elements to the end of an array and returns the new length of the array??", 
+	["last()","put()", "push()", "None of the above."], "push()"),
+	
+	new Question("4Which built-in method adds one or more elements to the end of an array and returns the new length of the array??", 
+	["last()","put()", "push()", "None of the above."], "push()"),	
+	new Question("5Which built-in method adds one or more elements to the end of an array and returns the new length of the array??", 
+	["last()","put()", "push()", "None of the above."], "push()"),
+	
+	
+	new Question("6Which built-in method adds one or more elements to the end of an array and returns the new length of the array??", 
+	["last()","put()", "push()", "None of the above."], "push()"),
+	
+	
+	new Question("7Which built-in method adds one or more elements to the end of an array and returns the new length of the array??", 
+	["last()","put()", "push()", "None of the above."], "push()"),
+	
+	
+	new Question("8Which built-in method adds one or more elements to the end of an array and returns the new length of the array??", 
+	["last()","put()", "push()", "None of the above."], "push()"),
+	
+	
+	new Question("9Which built-in method adds one or more elements to the end of an array and returns the new length of the array??", 
+	["last()","put()", "push()", "None of the above."], "push()"),
+	
+	
+	new Question("10Which built-in method adds one or more elements to the end of an array and returns the new length of the array??", 
+	["last()","put()", "push()", "None of the above."], "push()")
+	
+
 ];
 
 //Create Quiz

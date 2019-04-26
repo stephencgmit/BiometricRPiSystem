@@ -173,7 +173,35 @@ def verify_test(pos):
     else:
         return positionNumber
     
+def upload_fingerprint_template(name):
+    myquery={}
+    myquery['username'] = name
+    mydoc = coll.find_one(myquery)
+    #print(mydoc['uid'])
+    print(mydoc['image_template'])
+    image_temp = []
+    image_temp = mydoc['image_template']
+    print(image_temp)
+    #image_temp = f.storeTemplate()
     
+    try:
+        f = PyFingerprint('/dev/ttyUSB0', 57600, 0xFFFFFFFF, 0x00000000)
+        if ( f.verifyPassword() == False ):
+            raise ValueError('The given fingerprint sensor password is wrong!')
+
+    except Exception as e:
+        print('The fingerprint sensor could not be initialized!')
+        print('Exception message: ' + str(e))
+        exit(1)
+    print('Currently used templates: ' + str(f.getTemplateCount()) +'/'+ str(f.getStorageCapacity()))
+    position = f.getTemplateCount()
+    position = position+1
+    print("Inserting fingerprint matching user from mongo to local fingerprint sensor")
+    f.uploadCharacteristics(position, image_temp)
+    f.storeTemplate()
+    print('Currently used templates: ' + str(f.getTemplateCount()) +'/'+ str(f.getStorageCapacity()))
+ 
+    ####### SUCCESSFULLY UPLOADED CHARACTERISTIC TO LOCAL FP MODULE
 
 def mongo_tests():
     #mydict = {"name": "Stephen"}

@@ -99,14 +99,24 @@ def register():
             return redirect(url_for('register'))
     return render_template("register.html")
 
-@app.route("/profile/")
-def profile():
-    if g.user:
-        print(g.user)
-        user = {'username': g.user}
-        print(user)
-        return render_template("user.html", user=user)
-    return redirect(url_for('homepage'))
+
+
+@app.route("/download_fingerprint/", methods=['GET', 'POST'])
+def download_fingerprint():
+    if request.method == 'POST':
+        uname = request.form['un']
+        pycode.upload_fingerprint_template(uname)
+        return render_template("homepage.html")
+    return render_template("downloadtemp.html")
+
+#@app.route("/profile/")
+#def profile():
+#    if g.user:
+#        print(g.user)
+#        user = {'username': g.user}
+#        print(user)
+#        return render_template("user.html", user=user)
+#    return redirect(url_for('homepage'))
 
 
 @app.route('/getsession')
@@ -129,7 +139,18 @@ def dashboard():
 
 @app.route("/user")
 def user():
-    return render_template("user.html")
+    user = {'username': g.user}
+    list1 = []
+    for search in students.find({},{"image_template": 0, "uid":0, '_id':0}):
+        if(search['username']) == user['username']:
+            list1.append(search)
+    score_splitter = str(list1[0])
+    new_str = score_splitter.strip('{')
+    new__str = new_str.strip('}')
+    new___str = new__str.replace("'", '')
+    my_list = new___str.split(",")
+    template = jinja_env.get_template('user.html')
+    return template.render(my_list=my_list)
 
 @app.route("/leaderboard")# using jinja templating to render scores from mongo
 def leaderboard():
@@ -155,15 +176,24 @@ def loggedin():
 def subcategory(category):
     user = {'username': g.user}
     if category == "java":
+        if request.method == 'POST':
+            score = request.form['score']
+            quiz = request.form['quiz']
+            f = open("/home/pi/Desktop/FlaskTutorial/log.txt", "r")
+            last_login_fp = f.readline()
+            verify = pycode.verify_test(last_login_fp)
+            if (str(verify) == last_login_fp):
+                print("fingerprint verified")
+            else:
+                print("fingerprint not verified")
+            return redirect(url_for('user'))
         return render_template('/modules/java.html', user=user)
 
     elif category == "android":
         if request.method == 'POST':
-            num = request.form['score']
-            quiz = request.form['android']
-            print(type(num))
-            print(num)
-            print(quiz)
+            score = request.form['score']
+            quiz = request.form['quiz']
+            score = int(score)*10
             print("last login fingerprint = ")
             f = open("/home/pi/Desktop/FlaskTutorial/log.txt", "r")
             last_login_fp = f.readline()
@@ -173,38 +203,87 @@ def subcategory(category):
             print("last_login_fp = " + last_login_fp)
             if (str(verify) == last_login_fp):
                 print("fingerprint verified")
+                students.find_one_and_update({"username": g.user}, {"$set": {quiz:score}})
             else:
                 print("fingerprint not verified")
             # score is printed here after post.
             # verify user is still the last person who logged in. modify pycode.py
             # insert the score variable for the quiz to mongodb
             # Render profile page and see the score on the page. TODO.
+            return redirect(url_for('user'))
         return render_template('/modules/android.html', user=user)
 
     elif category == "cpp":
+        if request.method == 'POST':
+            score = request.form['score']
+            quiz = request.form['quiz']
+            score = int(score)*10
+            students.find_one_and_update({"username": g.user}, {"$set": {quiz:score}})
+            return redirect(url_for('user'))
         return render_template('/modules/cpp.html', user=user)
 
     elif category == "cloud":
+        if request.method == 'POST':
+            score = request.form['score']
+            quiz = request.form['quiz']
+            score = int(score)*10
+            students.find_one_and_update({"username": g.user}, {"$set": {quiz:score}})
+            return redirect(url_for('user'))
         return render_template('/modules/cloud.html' , user=user)
 
     elif category == "proeng":
+        if request.method == 'POST':
+            score = request.form['score']
+            quiz = request.form['quiz']
+            score = int(score)*10
+            students.find_one_and_update({"username": g.user}, {"$set": {quiz:score}})
+            return redirect(url_for('user'))
         return render_template('/modules/profeng.html',user=user)
 
     elif category == "dsp":
+        if request.method == 'POST':
+            score = request.form['score']
+            quiz = request.form['quiz']
+            score = int(score)*10
+            students.find_one_and_update({"username": g.user}, {"$set": {quiz:score}})
+            return redirect(url_for('user'))
         return render_template('/modules/dsp.html', user=user)
 
     elif category == "python":
+        if request.method == 'POST':
+            score = request.form['score']
+            quiz = request.form['quiz']
+            score = int(score)*10
+            students.find_one_and_update({"username": g.user}, {"$set": {quiz:score}})
+            return redirect(url_for('user'))
         return render_template('/modules/python.html', user=user)
 
     elif category == "javascript":
+        if request.method == 'POST':
+            score = request.form['score']
+            quiz = request.form['quiz']
+            score = int(score)*10
+            students.find_one_and_update({"username": g.user}, {"$set": {quiz:score}})
+            return redirect(url_for('user'))
         return render_template('/modules/javascript.html', user=user)
 
     elif category == "nodejs":
+        if request.method == 'POST':
+            score = request.form['score']
+            quiz = request.form['quiz']
+            score = int(score)*10
+            students.find_one_and_update({"username": g.user}, {"$set": {quiz:score}})
+            return redirect(url_for('user'))
         return render_template('/modules/nodejs.html', user=user)
 
     elif category == "math":
-        return render_template('/modules/math.html', user=user)
-
+        if request.method == 'POST':
+            score = request.form['score']
+            quiz = request.form['quiz']
+            score = int(score)*10
+            students.find_one_and_update({"username": g.user}, {"$set": {quiz:score}})
+            return redirect(url_for('user'))
+        return render_template('/modules/maths.html', user=user)
 
 
 

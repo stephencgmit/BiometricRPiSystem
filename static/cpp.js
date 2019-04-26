@@ -8,7 +8,7 @@ function Quiz(questions) {
 
 Quiz.prototype.guess = function(answer) {
     if(this.getCurrentQuestion().isCorrectAnswer(answer)) {
-        this.score++;
+        this.downloadtemp++;
     }
     this.currentQuestionIndex++;
 };
@@ -93,10 +93,10 @@ var questions = [
     new Question("Which operator is required to be overloaded as member function only??", [ "_", "_ _", "++ (postfix version)", "="], "="),
     new Question("How many number of arguments can a destructor of a class receives?", [ "0", "1", "2", "None of the above"], "0"),
     new Question("Objects created using new operator are stored in __ memory.?", [ "Cache", "Heap", "Stack", "None of the above"], "Heap"),
-    new Question("A C++ program statements can be commented using?", [ "Single line comment", "Multi line comment", "Either (a) or (b)", "Both (a) and (b)"], "Both (a) and (b)"),
+    new Question("A C++ program statements can be commented using?", [ "Single line comment", "Multi line comment", "Either (a) or (b)", "Both (a) and (b)."], "Both (a) and (b)"),
     new Question(" i) Exception handling technically provides multi branching.\n" +
         "ii) Exception handling can be mimicked using ‘goto’ construct.", [ "Only (i) is true", "Only (ii) is true", "Both (i) & (ii) are true", "Both (i) && (ii) are false"], "Only (i) is true"),
-    new Question("What is the size of ‘int’??", [ "8 bit", "4 bit", "2 bit", "Compiler dependent"], "Compiler dependent"),
+    new Question("What is the size of ‘int’??", [ "8 bit", "4 bit", "2 bit", "Compiler dependent"], "Compiler dependent."),
     new Question("i) Exceptions can be traced and controlled using conditional statements.\n" +
         "ii) For critical exceptions compiler provides the handler", [ "Only (i) is true", "Only (ii) is true", "Both (i) & (ii) are true", "Both (i) && (ii) are false"], "Only (ii) is true"),
     new Question("In C++ the name main has ________ scope", [ "program", "standard", "local", "global"], "global"),

@@ -8,7 +8,7 @@ function Quiz(questions) {
 
 Quiz.prototype.guess = function(answer) {
     if(this.getCurrentQuestion().isCorrectAnswer(answer)) {
-        this.score++;
+        this.downloadtemp++;
     }
     this.currentQuestionIndex++;
 };
@@ -63,6 +63,7 @@ var QuizUI = {
         var gameOverHTML = "<h1>Game Over</h1>";
         gameOverHTML += "<h2> Your score is: " + quiz.score + "</h2>";
         this.populateIdWithHTML("quiz", gameOverHTML);
+		this.populateIdWithHTML("score", quizScore);
     },
 
     populateIdWithHTML: function(id, text) {
@@ -89,8 +90,16 @@ var QuizUI = {
 
 //Create Questions
 var questions = [
-    new Question("Who was the first President of the United States?", [ "George Washington", "Thomas Jefferson", "George W Bush"], "George Washington"),
-    new Question("What is the answer to the Ultimate Question of Life, the Universe, and Everything?", ["Pi","42"], "42")
+    new Question("What is 3+7?", [ "10", "12", "14", "7"], "10"),
+    new Question("What is 20/5?", ["10","25", "6", "4"], "4"),
+	new Question("What is 3*7?", [ "21", "25", "13", "10"], "21"),
+    new Question("What is 1+1?", ["1","3", "2", "4"], "2"),
+    new Question("What is 3+7?", [ "10", "12", "14", "7"], "10"),
+    new Question("What is 20/5?", ["10","25", "6", "4"], "4"),
+	new Question("What is 3*7?", [ "21", "25", "13", "10"], "21"),
+    new Question("What is 1+1?", ["1","3", "2", "4"], "2"),
+	new Question("What is 3+7?", [ "10", "12", "14", "7"], "10"),
+    new Question("What is 20/5?", ["10","25", "6", "4"], "4")
 ];
 
 //Create Quiz

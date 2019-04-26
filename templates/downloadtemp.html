@@ -1,0 +1,57 @@
+<!--<!DOCTYPE html>-->
+<!--{% if user %}-->
+    <!--<h1>Hello {{user}}</h1>-->
+<!--{% else %}-->
+    <!--<h1>Please log in</h1>-->
+<!--{% endif %}-->
+
+<!--<!DOCTYPE html>-->
+<!--{% if user %}-->
+    <!--<h1>Hello {{user}}</h1>-->
+<!--{% else %}-->
+    <!--<h1>Please log in</h1>-->
+<!--{% endif %}-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+  	<link rel=stylesheet type=text/css href="{{url_for('static', filename='style.css')}}">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home"></span> Raspberry Pi College</a>
+			</div>
+		</div>
+	</nav>
+<div class="jumbotron text-center">
+    <div class="container">
+        <h2>Download Template Image for Logging in</h2>
+  <p>Please enter your username!</p>
+    </div>
+</div>
+<div class="container">
+        </div>
+              <form action="" method="post">
+                <input type="text" placeholder="Username" class="form__input" name="un" value="{{ request.form.un }}">
+                <h3>Download Your Fingerprint For access to this machine</h3>
+                <input class="btn btn-default" class="form__btn" type="submit" value="Download">
+      </form>
+              </div>
+</div>
+        </div>
+        <br><br>
+</div>
+</body>
+</html>

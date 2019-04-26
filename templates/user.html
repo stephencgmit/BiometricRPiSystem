@@ -3,7 +3,6 @@
 <head>
 	<title>User</title>
 	<meta charset="utf-8">
-	<link rel=stylesheet type=text/css href="{{url_for('static', filename='style.css')}}">
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -41,9 +40,19 @@
 	</nav>
 	<div class="container">
 		<div class="row">
-			<h1>Welcome {{user.username}} </h1>
+			<h1>Welcome, your scores are below!</h1>
+			<div style="padding: 50px"></div>
 			</div>
+			<table>
+			{% for item in my_list %}
+			<TR>
+			   <TD style="font-size: 40px; border: 2px; padding-left: 20px">{{item}}</TD>
+			</TR>
+			{% endfor %}
+			</table>
+
 		</div>
+		<div style="padding: 200px"></div>
 	</div><br/><br/>
 	<div class="jumbotron" style="background-color: black;">
 		<p style="text-align: center; color: white;">&copy; 2019 RPi-College. All rights reserved.</p>

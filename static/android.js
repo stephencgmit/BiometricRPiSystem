@@ -1,16 +1,9 @@
-// quiz constructor
+
 
 function Quiz(questions) {
     this.score = 0;
     this.questions = questions;
     this.currentQuestionIndex = 0;
-}
-
-function myFunction(score){
-	var x = document.createElement("INPUT");
-	x.setAttribute("type", "text");
-	x.setAttribute("value", score);
-	document.body.appendChild(x);
 }
 
 Quiz.prototype.guess = function(answer) {
@@ -67,13 +60,11 @@ var QuizUI = {
     },
 
     displayScore: function() {
-        var gameOverHTML = "<h1>Game Over</h1>";
+        var gameOverHTML = "<h1>Quiz Over</h1>";
         var quizScore = quiz.score;
         gameOverHTML += "<h2> Your score is: " + quiz.score + "</h2>";
         this.populateIdWithHTML("quiz", gameOverHTML);
         this.populateIdWithHTML("score", quizScore);
-	myFunction(quizScore);
-
 
     },
 
