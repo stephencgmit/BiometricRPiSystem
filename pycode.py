@@ -193,11 +193,15 @@ def upload_fingerprint_template(name):
         print('The fingerprint sensor could not be initialized!')
         print('Exception message: ' + str(e))
         exit(1)
+    result = image_temp
+    result = f.searchTemplate()
+    positionNumber = result[0]
+
     print('Currently used templates: ' + str(f.getTemplateCount()) +'/'+ str(f.getStorageCapacity()))
     position = f.getTemplateCount()
     position = position+1
     print("Inserting fingerprint matching user from mongo to local fingerprint sensor")
-    f.uploadCharacteristics(position, image_temp)
+    f.uploadCharacteristics(0x01, image_temp)
     f.storeTemplate()
     print('Currently used templates: ' + str(f.getTemplateCount()) +'/'+ str(f.getStorageCapacity()))
  
@@ -208,6 +212,6 @@ def mongo_tests():
     for x in connect_to_collection.find():
         print(x)
     
-
+#upload_fingerprint_template('rindex')
 #mongo_tests()
 #login() 
