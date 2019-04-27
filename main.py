@@ -9,7 +9,8 @@ import os
 from flask_login import LoginManager, UserMixin
 from flask_login import current_user, login_user
 from pyfingerprint import *
-import pycode 
+import pycode
+import arrow
 
 
 client = MongoClient("mongodb://fpDBuser:project2019@fingerprintproject-shard-00-00-2ee1v.mongodb."
@@ -20,6 +21,7 @@ client = MongoClient("mongodb://fpDBuser:project2019@fingerprintproject-shard-00
 mydb = client['fingerprint_project']
 students = mydb['students']
 scores = mydb['scores']
+log = mydb['log']
 
 app = Flask(__name__)
 
@@ -37,7 +39,7 @@ last_login_fp = 0
 @app.route("/")
 def home():
     #flash("Hellooooooooo")
-    session['user'] = ''
+    session['user'] = '' # drops user session when visiting index
     return render_template("homepage.html")
 
 # Route for handling the login page logic
@@ -69,6 +71,10 @@ def login():
             flash('User not found. Try Again!')
             return redirect(url_for('login'))
         else:
+            date = arrow.now().format('YYYY-MM-DD hh-mm-ss')
+            log_login = username + ' Logged in'
+            mongo_insert = {date: log_login}
+            x = log.insert_one(mongo_insert)
             return redirect(url_for('dashboard'))
     return render_template('login.html', error=error)
 
@@ -96,6 +102,10 @@ def register():
         if a == 1:
             print("successful registration")
             flash('Successful Registration. You can now login')
+            date = arrow.now().format('YYYY-MM-DD hh-mm-ss')
+            log_register = username + ' Registered'
+            mongo_insert = {date: log_register}
+            x = log.insert_one(mongo_insert)
             return redirect(url_for('homepage'))
         else:
             flash('Unsuccessful Registration. You need to try again')
@@ -226,6 +236,11 @@ def score1(score_id):
         if (str(verify) == last_login_fp):
             print("fingerprint verified")
             students.find_one_and_update({"username": g.user}, {"$set": {'android':score}})
+            user = g.user
+            date = arrow.now().format('YYYY-MM-DD hh-mm-ss')
+            log_score = (user + ' scored ' + str(score) + ' in Android quiz')
+            mongo_insert = {date: log_score}
+            x = log.insert_one(mongo_insert)
             flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
             flash('Check user page for all your scores')
             return redirect(url_for('score'))
@@ -251,6 +266,12 @@ def score2(score_id):
         if (str(verify) == last_login_fp):
             print("fingerprint verified")
             students.find_one_and_update({"username": g.user}, {"$set": {'cloud':score}})
+            user = g.user
+            date = arrow.now().format('YYYY-MM-DD hh-mm-ss')
+            log_score = (user + ' scored ' + str(score) + ' in Cloud quiz')
+
+            mongo_insert = {date: log_score}
+            x = log.insert_one(mongo_insert)
             flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
             flash('Check user page for all your scores')
             return redirect(url_for('score'))
@@ -277,6 +298,12 @@ def score3(score_id):
         if (str(verify) == last_login_fp):
             print("fingerprint verified")
             students.find_one_and_update({"username": g.user}, {"$set": {'cpp':score}})
+            user = g.user
+            date = arrow.now().format('YYYY-MM-DD hh-mm-ss')
+            log_score = (user + ' scored ' + str(score) + ' in Cpp quiz')
+
+            mongo_insert = {date: log_score}
+            x = log.insert_one(mongo_insert)
             flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
             flash('Check user page for all your scores')
             return redirect(url_for('score'))
@@ -303,6 +330,12 @@ def score4(score_id):
         if (str(verify) == last_login_fp):
             print("fingerprint verified")
             students.find_one_and_update({"username": g.user}, {"$set": {'dsp':score}})
+            user = g.user
+            date = arrow.now().format('YYYY-MM-DD hh-mm-ss')
+            log_score = (user + ' scored ' + str(score) + ' in DSP quiz')
+
+            mongo_insert = {date: log_score}
+            x = log.insert_one(mongo_insert)
             flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
             flash('Check user page for all your scores')
             return redirect(url_for('score'))
@@ -329,6 +362,12 @@ def score5(score_id):
         if (str(verify) == last_login_fp):
             print("fingerprint verified")
             students.find_one_and_update({"username": g.user}, {"$set": {'java':score}})
+            user = g.user
+            date = arrow.now().format('YYYY-MM-DD hh-mm-ss')
+            log_score = (user + ' scored ' + str(score) + ' in Java quiz')
+
+            mongo_insert = {date: log_score}
+            x = log.insert_one(mongo_insert)
             flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
             flash('Check user page for all your scores')
             return redirect(url_for('score'))
@@ -355,6 +394,11 @@ def score6(score_id):
         if (str(verify) == last_login_fp):
             print("fingerprint verified")
             students.find_one_and_update({"username": g.user}, {"$set": {'javascript':score}})
+            user = g.user
+            date = arrow.now().format('YYYY-MM-DD hh-mm-ss')
+            log_score = (user + ' scored ' + str(score) + ' in Javascript quiz')
+            mongo_insert = {date: log_score}
+            x = log.insert_one(mongo_insert)
             flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
             flash('Check user page for all your scores')
             return redirect(url_for('score'))
@@ -381,6 +425,12 @@ def score7(score_id):
         if (str(verify) == last_login_fp):
             print("fingerprint verified")
             students.find_one_and_update({"username": g.user}, {"$set": {'maths':score}})
+            user = g.user
+            date = arrow.now().format('YYYY-MM-DD hh-mm-ss')
+            log_score = (user + ' scored ' + str(score) + ' in Maths quiz')
+
+            mongo_insert = {date: log_score}
+            x = log.insert_one(mongo_insert)
             flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
             flash('Check user page for all your scores')
             return redirect(url_for('score'))
@@ -407,6 +457,12 @@ def score8(score_id):
         if (str(verify) == last_login_fp):
             print("fingerprint verified")
             students.find_one_and_update({"username": g.user}, {"$set": {'nodejs':score}})
+            user = g.user
+            date = arrow.now().format('YYYY-MM-DD hh-mm-ss')
+            log_score = (user + ' scored ' + str(score) + ' in Nodejs quiz')
+
+            mongo_insert = {date: log_score}
+            x = log.insert_one(mongo_insert)
             flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
             flash('Check user page for all your scores')
             return redirect(url_for('score'))
@@ -433,6 +489,12 @@ def score9(score_id):
         if (str(verify) == last_login_fp):
             print("fingerprint verified")
             students.find_one_and_update({"username": g.user}, {"$set": {'proeng':score}})
+            user = g.user
+            date = arrow.now().format('YYYY-MM-DD hh-mm-ss')
+            log_score = (user + ' scored ' + str(score) + ' in Professional Engineer quiz')
+
+            mongo_insert = {date: log_score}
+            x = log.insert_one(mongo_insert)
             flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
             flash('Check user page for all your scores')
             return redirect(url_for('score'))
@@ -448,6 +510,9 @@ def score10(score_id):
     user = {'username': g.user}
     if request.method == 'GET':
         score = int(score_id)
+
+
+        
         score = score*10
         print("Users score is: " + str(score))
         f = open("/home/pi/Desktop/FlaskTutorial/log.txt", "r")
@@ -459,6 +524,12 @@ def score10(score_id):
         if (str(verify) == last_login_fp):
             print("fingerprint verified")
             students.find_one_and_update({"username": g.user}, {"$set": {'python':score}})
+            user = g.user
+            date = arrow.now().format('YYYY-MM-DD hh-mm-ss')
+            log_score = (user + ' scored ' + str(score) + ' in Python quiz')
+
+            mongo_insert = {date: log_score}
+            x = log.insert_one(mongo_insert)
             flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
             flash('Check user page for all your scores')
             return redirect(url_for('score'))
@@ -472,6 +543,31 @@ def score10(score_id):
 @app.route('/score')
 def score():
     return render_template('score.html')
+
+
+@app.route('/admin', methods=['GET', 'POST'])
+def admin():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if(password== 'admin' and username == 'admin'):
+            print('hi admin')
+            redirect(url_for(viewdb))
+        else:
+            print('not now admin')
+            redirect(url_for(index))
+    return render_template('admin.html')
+
+
+@app.route('/viewdb')
+def viewdb():
+    loglists = []
+    for x in log.find({},{"_id":0}):
+        print(x)
+        loglists.append(x)
+    print(loglists)
+    template = jinja_env.get_template('viewdb.html')
+    return template.render(loglists=loglists)
 
 
 

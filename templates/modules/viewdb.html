@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+    tr{
+        border: 1px solid black;
+    }
+
+
+</style>
+</head>
+    <body>
+    <p>admin yo</p>
+        <table>
+            {% for loglist in loglists %}
+                <tr>
+                    <td style="font-size: 40px">{{loglist}}</td>
+                    <td style="font-size: 40px">{{loglist.username}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>
