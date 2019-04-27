@@ -176,114 +176,263 @@ def loggedin():
 def subcategory(category):
     user = {'username': g.user}
     if category == "java":
-        if request.method == 'POST':
-            score = request.form['score']
-            quiz = request.form['quiz']
-            f = open("/home/pi/Desktop/FlaskTutorial/log.txt", "r")
-            last_login_fp = f.readline()
-            verify = pycode.verify_test(last_login_fp)
-            if (str(verify) == last_login_fp):
-                print("fingerprint verified")
-            else:
-                print("fingerprint not verified")
-            return redirect(url_for('user'))
         return render_template('/modules/java.html', user=user)
 
     elif category == "android":
-        if request.method == 'POST':
-            score = request.form['score']
-            quiz = request.form['quiz']
-            score = int(score)*10
-            print("last login fingerprint = ")
-            f = open("/home/pi/Desktop/FlaskTutorial/log.txt", "r")
-            last_login_fp = f.readline()
-            print(last_login_fp)
-            verify = pycode.verify_test(last_login_fp)
-            print("verify = " + str(verify))
-            print("last_login_fp = " + last_login_fp)
-            if (str(verify) == last_login_fp):
-                print("fingerprint verified")
-                students.find_one_and_update({"username": g.user}, {"$set": {quiz:score}})
-            else:
-                print("fingerprint not verified")
-            # score is printed here after post.
-            # verify user is still the last person who logged in. modify pycode.py
-            # insert the score variable for the quiz to mongodb
-            # Render profile page and see the score on the page. TODO.
-            return redirect(url_for('user'))
         return render_template('/modules/android.html', user=user)
 
     elif category == "cpp":
-        if request.method == 'POST':
-            score = request.form['score']
-            quiz = request.form['quiz']
-            score = int(score)*10
-            students.find_one_and_update({"username": g.user}, {"$set": {quiz:score}})
-            return redirect(url_for('user'))
         return render_template('/modules/cpp.html', user=user)
 
     elif category == "cloud":
-        if request.method == 'POST':
-            score = request.form['score']
-            quiz = request.form['quiz']
-            score = int(score)*10
-            students.find_one_and_update({"username": g.user}, {"$set": {quiz:score}})
-            return redirect(url_for('user'))
         return render_template('/modules/cloud.html' , user=user)
 
     elif category == "proeng":
-        if request.method == 'POST':
-            score = request.form['score']
-            quiz = request.form['quiz']
-            score = int(score)*10
-            students.find_one_and_update({"username": g.user}, {"$set": {quiz:score}})
-            return redirect(url_for('user'))
         return render_template('/modules/profeng.html',user=user)
 
     elif category == "dsp":
-        if request.method == 'POST':
-            score = request.form['score']
-            quiz = request.form['quiz']
-            score = int(score)*10
-            students.find_one_and_update({"username": g.user}, {"$set": {quiz:score}})
-            return redirect(url_for('user'))
         return render_template('/modules/dsp.html', user=user)
 
     elif category == "python":
-        if request.method == 'POST':
-            score = request.form['score']
-            quiz = request.form['quiz']
-            score = int(score)*10
-            students.find_one_and_update({"username": g.user}, {"$set": {quiz:score}})
-            return redirect(url_for('user'))
         return render_template('/modules/python.html', user=user)
 
     elif category == "javascript":
-        if request.method == 'POST':
-            score = request.form['score']
-            quiz = request.form['quiz']
-            score = int(score)*10
-            students.find_one_and_update({"username": g.user}, {"$set": {quiz:score}})
-            return redirect(url_for('user'))
         return render_template('/modules/javascript.html', user=user)
 
     elif category == "nodejs":
-        if request.method == 'POST':
-            score = request.form['score']
-            quiz = request.form['quiz']
-            score = int(score)*10
-            students.find_one_and_update({"username": g.user}, {"$set": {quiz:score}})
-            return redirect(url_for('user'))
         return render_template('/modules/nodejs.html', user=user)
 
     elif category == "math":
-        if request.method == 'POST':
-            score = request.form['score']
-            quiz = request.form['quiz']
-            score = int(score)*10
-            students.find_one_and_update({"username": g.user}, {"$set": {quiz:score}})
-            return redirect(url_for('user'))
         return render_template('/modules/maths.html', user=user)
+
+
+@app.route('/android/<score_id>', methods=['GET', 'POST'])
+def score1(score_id):
+    user = {'username': g.user}
+    if request.method == 'GET':
+        score = int(score_id)
+        score = score*10
+        print("Users score is: " + str(score))
+        f = open("/home/pi/Desktop/FlaskTutorial/log.txt", "r")
+        last_login_fp = f.readline()
+        print(last_login_fp)
+        verify = pycode.verify_test()
+        print("verify = " + str(verify))
+        print("last_login_fp = " + str(last_login_fp))
+        if (str(verify) == last_login_fp):
+            print("fingerprint verified")
+            students.find_one_and_update({"username": g.user}, {"$set": {'android':score}})
+            return redirect(url_for('user'))
+        else:
+            print("fingerprint not verified. Restart Quiz Please")
+            return redirect(url_for('user'))
+        return render_template('user.html')
+
+@app.route('/cloud/<score_id>', methods=['GET', 'POST'])
+def score2(score_id):
+    user = {'username': g.user}
+    if request.method == 'GET':
+        score = int(score_id)
+        score = score*10
+        print("Users score is: " + str(score))
+        f = open("/home/pi/Desktop/FlaskTutorial/log.txt", "r")
+        last_login_fp = f.readline()
+        print(last_login_fp)
+        verify = pycode.verify_test()
+        print("verify = " + str(verify))
+        print("last_login_fp = " + str(last_login_fp))
+        if (str(verify) == last_login_fp):
+            print("fingerprint verified")
+            students.find_one_and_update({"username": g.user}, {"$set": {'cloud':score}})
+            return redirect(url_for('user'))
+        else:
+            print("fingerprint not verified. Restart Quiz Please")
+            return redirect(url_for('user'))
+        return render_template('user.html')
+
+
+@app.route('/cpp/<score_id>', methods=['GET', 'POST'])
+def score3(score_id):
+    user = {'username': g.user}
+    if request.method == 'GET':
+        score = int(score_id)
+        score = score*10
+        print("Users score is: " + str(score))
+        f = open("/home/pi/Desktop/FlaskTutorial/log.txt", "r")
+        last_login_fp = f.readline()
+        print(last_login_fp)
+        verify = pycode.verify_test()
+        print("verify = " + str(verify))
+        print("last_login_fp = " + str(last_login_fp))
+        if (str(verify) == last_login_fp):
+            print("fingerprint verified")
+            students.find_one_and_update({"username": g.user}, {"$set": {'cpp':score}})
+            return redirect(url_for('user'))
+        else:
+            print("fingerprint not verified. Restart Quiz Please")
+            return redirect(url_for('user'))
+        return render_template('user.html')
+
+
+@app.route('/dsp/<score_id>', methods=['GET', 'POST'])
+def score4(score_id):
+    user = {'username': g.user}
+    if request.method == 'GET':
+        score = int(score_id)
+        score = score*10
+        print("Users score is: " + str(score))
+        f = open("/home/pi/Desktop/FlaskTutorial/log.txt", "r")
+        last_login_fp = f.readline()
+        print(last_login_fp)
+        verify = pycode.verify_test()
+        print("verify = " + str(verify))
+        print("last_login_fp = " + str(last_login_fp))
+        if (str(verify) == last_login_fp):
+            print("fingerprint verified")
+            students.find_one_and_update({"username": g.user}, {"$set": {'dsp':score}})
+            return redirect(url_for('user'))
+        else:
+            print("fingerprint not verified. Restart Quiz Please")
+            return redirect(url_for('user'))
+        return render_template('user.html')
+
+
+@app.route('/java/<score_id>', methods=['GET', 'POST'])
+def score5(score_id):
+    user = {'username': g.user}
+    if request.method == 'GET':
+        score = int(score_id)
+        score = score*10
+        print("Users score is: " + str(score))
+        f = open("/home/pi/Desktop/FlaskTutorial/log.txt", "r")
+        last_login_fp = f.readline()
+        print(last_login_fp)
+        verify = pycode.verify_test()
+        print("verify = " + str(verify))
+        print("last_login_fp = " + str(last_login_fp))
+        if (str(verify) == last_login_fp):
+            print("fingerprint verified")
+            students.find_one_and_update({"username": g.user}, {"$set": {'java':score}})
+            return redirect(url_for('user'))
+        else:
+            print("fingerprint not verified. Restart Quiz Please")
+            return redirect(url_for('user'))
+        return render_template('user.html')
+
+
+@app.route('/javascript/<score_id>', methods=['GET', 'POST'])
+def score6(score_id):
+    user = {'username': g.user}
+    if request.method == 'GET':
+        score = int(score_id)
+        score = score*10
+        print("Users score is: " + str(score))
+        f = open("/home/pi/Desktop/FlaskTutorial/log.txt", "r")
+        last_login_fp = f.readline()
+        print(last_login_fp)
+        verify = pycode.verify_test()
+        print("verify = " + str(verify))
+        print("last_login_fp = " + str(last_login_fp))
+        if (str(verify) == last_login_fp):
+            print("fingerprint verified")
+            students.find_one_and_update({"username": g.user}, {"$set": {'javascript':score}})
+            return redirect(url_for('user'))
+        else:
+            print("fingerprint not verified. Restart Quiz Please")
+            return redirect(url_for('user'))
+        return render_template('user.html')
+
+
+@app.route('/maths/<score_id>', methods=['GET', 'POST'])
+def score7(score_id):
+    user = {'username': g.user}
+    if request.method == 'GET':
+        score = int(score_id)
+        score = score*10
+        print("Users score is: " + str(score))
+        f = open("/home/pi/Desktop/FlaskTutorial/log.txt", "r")
+        last_login_fp = f.readline()
+        print(last_login_fp)
+        verify = pycode.verify_test()
+        print("verify = " + str(verify))
+        print("last_login_fp = " + str(last_login_fp))
+        if (str(verify) == last_login_fp):
+            print("fingerprint verified")
+            students.find_one_and_update({"username": g.user}, {"$set": {'maths':score}})
+            return redirect(url_for('user'))
+        else:
+            print("fingerprint not verified. Restart Quiz Please")
+            return redirect(url_for('user'))
+        return render_template('user.html')
+
+
+@app.route('/nodejs/<score_id>', methods=['GET', 'POST'])
+def score8(score_id):
+    user = {'username': g.user}
+    if request.method == 'GET':
+        score = int(score_id)
+        score = score*10
+        print("Users score is: " + str(score))
+        f = open("/home/pi/Desktop/FlaskTutorial/log.txt", "r")
+        last_login_fp = f.readline()
+        print(last_login_fp)
+        verify = pycode.verify_test()
+        print("verify = " + str(verify))
+        print("last_login_fp = " + str(last_login_fp))
+        if (str(verify) == last_login_fp):
+            print("fingerprint verified")
+            students.find_one_and_update({"username": g.user}, {"$set": {'nodejs':score}})
+            return redirect(url_for('user'))
+        else:
+            print("fingerprint not verified. Restart Quiz Please")
+            return redirect(url_for('user'))
+        return render_template('user.html')
+
+
+@app.route('/proeng/<score_id>', methods=['GET', 'POST'])
+def score9(score_id):
+    user = {'username': g.user}
+    if request.method == 'GET':
+        score = int(score_id)
+        score = score*10
+        print("Users score is: " + str(score))
+        f = open("/home/pi/Desktop/FlaskTutorial/log.txt", "r")
+        last_login_fp = f.readline()
+        print(last_login_fp)
+        verify = pycode.verify_test()
+        print("verify = " + str(verify))
+        print("last_login_fp = " + str(last_login_fp))
+        if (str(verify) == last_login_fp):
+            print("fingerprint verified")
+            students.find_one_and_update({"username": g.user}, {"$set": {'proeng':score}})
+            return redirect(url_for('user'))
+        else:
+            print("fingerprint not verified. Restart Quiz Please")
+            return redirect(url_for('user'))
+        return render_template('user.html')
+
+
+@app.route('/python/<score_id>', methods=['GET', 'POST'])
+def score10(score_id):
+    user = {'username': g.user}
+    if request.method == 'GET':
+        score = int(score_id)
+        score = score*10
+        print("Users score is: " + str(score))
+        f = open("/home/pi/Desktop/FlaskTutorial/log.txt", "r")
+        last_login_fp = f.readline()
+        print(last_login_fp)
+        verify = pycode.verify_test()
+        print("verify = " + str(verify))
+        print("last_login_fp = " + str(last_login_fp))
+        if (str(verify) == last_login_fp):
+            print("fingerprint verified")
+            students.find_one_and_update({"username": g.user}, {"$set": {'python':score}})
+            return redirect(url_for('user'))
+        else:
+            print("fingerprint not verified. Restart Quiz Please")
+            return redirect(url_for('user'))
+        return render_template('user.html')
 
 
 

@@ -131,7 +131,7 @@ def reg(username):
     return 1
 
 
-def verify_test(pos):
+def verify_test():
     try:
         f = PyFingerprint('/dev/ttyUSB0', 57600, 0xFFFFFFFF, 0x00000000)
 
@@ -144,7 +144,7 @@ def verify_test(pos):
         exit(1)
 
     print('Currently used templates: ' + str(f.getTemplateCount()) +'/'+ str(f.getStorageCapacity()))
-    time.sleep(1)
+    time.sleep(0.1)
     try:
         while ( f.readImage() == False ):
             pass
@@ -167,11 +167,12 @@ def verify_test(pos):
         exit(1)
     
     if ( positionNumber == -1 ):
-        print('No match found! Try again')
+        print('No match found! Try again....')
         time.sleep(0.5)
-        login()
-    else:
-        return positionNumber
+        verify_test()
+    #else:
+    
+    return positionNumber
     
 def upload_fingerprint_template(name):
     myquery={}

@@ -16,7 +16,7 @@
 				<a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home"></span> RPi</a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li><a href="/profile/{{ currentuser }}"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
+				<li><a href="/user"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
 								<li><a href="/dashboard"><span class="glyphicon glyphicon-user"></span>Homepage</a></li>
 
 				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-th-list"></span> Modules<span class="caret"></span></a>
@@ -46,26 +46,18 @@
 						<h1>Professional Engineer Quiz</h1>
 
 							<h2 id="question" class="headline-secondary--grouped"></h2>
-
 							<p id="choice0"></p>
 							<button id="guess0" class="btn--default">Select Answer</button>
-
 							<p id="choice1"></p>
-
 							<button id="guess1" class="btn--default">Select Answer</button>
-
 								  <p id="choice2"></p>
 							<button id="guess2" class="btn--default">Select Answer</button>
 								  <p id="choice3"></p>
 							<button id="guess3" class="btn--default">Select Answer</button>
-
 					</div>
-              <form action="" method="post">
-                  <div class="form-group">
-                <input type="text" placeholder="Score" class="form__input" name="score" value="{{ request.form.score }}">
-                <input type="hidden" id="quiz" name="quiz" value="profeng">
-					  <input class="btn btn-default" class="form__btn" type="submit" value="Submit Score"></div>
-      </form>
+					<p id="progress">Question x of y</p>
+					<a id="get"></a>
+					<h2 id="submit"><</h2>
 				</div>
 				        <footer>
 					</footer>
@@ -73,7 +65,7 @@
 			</div>
 		</div>
 	<!--{{score}}-->
-							<script src="http://yourjavascript.com/4152936468/profeng.js"> </script>
+							<script src="http://yourjavascript.com/3427072196/profeng.js"> </script>
 	<br/><br/>
 
 	</div><br/><br/>

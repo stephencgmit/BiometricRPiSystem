@@ -16,7 +16,7 @@
 				<a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home"></span> Raspberry Pi College</a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li><a href="/profile/{{ currentuser }}"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
+				<li><a href="/user"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
 								<li><a href="/dashboard"><span class="glyphicon glyphicon-user"></span>Homepage</a></li>
 
 				<li><a href="/dashboard"><span class="glyphicon glyphicon-user"></span>Homepage</a></li>
@@ -52,22 +52,18 @@
 							<button id="guess1" class="btn--default">Select Answer</button>
 								  <p id="choice2"></p>
 							<button id="guess2" class="btn--default">Select Answer</button>
-														  <p id="choice3"></p>
-							<button id="guess3" class="btn--default">Select Answer</button>#
-
+								  <p id="choice3"></p>
+							<button id="guess3" class="btn--default">Select Answer</button>
 					</div>
-										<div style="padding: 20px"></div>
-              <form action="" method="post">
-                  <div class="form-group">
-                <input type="text" placeholder="Score" class="form__input" name="score" value="{{ request.form.score }}">
-                <input type="hidden" id="quiz" name="quiz" value="android">
-					  <input class="btn btn-default" class="form__btn" type="submit" value="Submit Score"></div>
-      </form>
+					<p id="progress">Question x of y</p>
+					<a id="get"></a>
+					<h2 id="submit"><</h2>
+
 
 					<div style="padding: 20px"></div>
 				</div>
 									<div style="padding: 200px"></div>
-		<script src="http://yourjavascript.com/3934125340/android.js">
+		<script src="http://yourjavascript.com/2370491273/android.js">
 				        <footer>
 	<div class="jumbotron" style="background-color: black;">
 		<p style="text-align: center; color: white;">&copy; 2018 RPi. All rights reserved.</p>
