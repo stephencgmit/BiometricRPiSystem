@@ -64,10 +64,10 @@ def login():
         #user = {'username': mongo_query['username'], 'uid': a}
         print(search)
         print(search.count()) # check number of returned usernames from mongo
-        if(search.count() == 0):
+        if(search.count() == 0 or last_login_fp == -1):
             print('USER NOT FOUND IN MONGODB')
-            #flash('user not found')
-            return redirect(url_for('homepage'))
+            flash('User not found. Try Again!')
+            return redirect(url_for('login'))
         else:
             return redirect(url_for('dashboard'))
     return render_template('login.html', error=error)
@@ -95,7 +95,10 @@ def register():
         print(a)
         if a == 1:
             print("successful registration")
+            flash('Successful Registration. You can now login')
+            return redirect(url_for('homepage'))
         else:
+            flash('Unsuccessful Registration. You need to try again')
             return redirect(url_for('register'))
     return render_template("register.html")
 
@@ -144,6 +147,7 @@ def user():
     for search in students.find({},{"image_template": 0, "uid":0, '_id':0}):
         if(search['username']) == user['username']:
             list1.append(search)
+    print("Print the list from mongo please: " + str(list1))
     score_splitter = str(list1[0])
     new_str = score_splitter.strip('{')
     new__str = new_str.strip('}')
@@ -222,10 +226,13 @@ def score1(score_id):
         if (str(verify) == last_login_fp):
             print("fingerprint verified")
             students.find_one_and_update({"username": g.user}, {"$set": {'android':score}})
-            return redirect(url_for('user'))
+            flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
+            flash('Check user page for all your scores')
+            return redirect(url_for('score'))
         else:
-            print("fingerprint not verified. Restart Quiz Please")
-            return redirect(url_for('user'))
+            print("fingerprint not verified. Test score not submitted")
+            flash('Fingerprint not verified. Test score not submitted')
+            return redirect(url_for('score'))
         return render_template('user.html')
 
 @app.route('/cloud/<score_id>', methods=['GET', 'POST'])
@@ -244,10 +251,13 @@ def score2(score_id):
         if (str(verify) == last_login_fp):
             print("fingerprint verified")
             students.find_one_and_update({"username": g.user}, {"$set": {'cloud':score}})
-            return redirect(url_for('user'))
+            flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
+            flash('Check user page for all your scores')
+            return redirect(url_for('score'))
         else:
-            print("fingerprint not verified. Restart Quiz Please")
-            return redirect(url_for('user'))
+            print("fingerprint not verified. Test score not submitted")
+            flash('Fingerprint not verified. Test score not submitted')
+            return redirect(url_for('score'))
         return render_template('user.html')
 
 
@@ -267,10 +277,13 @@ def score3(score_id):
         if (str(verify) == last_login_fp):
             print("fingerprint verified")
             students.find_one_and_update({"username": g.user}, {"$set": {'cpp':score}})
-            return redirect(url_for('user'))
+            flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
+            flash('Check user page for all your scores')
+            return redirect(url_for('score'))
         else:
-            print("fingerprint not verified. Restart Quiz Please")
-            return redirect(url_for('user'))
+            print("fingerprint not verified. Test score not submitted")
+            flash('Fingerprint not verified. Test score not submitted')
+            return redirect(url_for('score'))
         return render_template('user.html')
 
 
@@ -290,10 +303,13 @@ def score4(score_id):
         if (str(verify) == last_login_fp):
             print("fingerprint verified")
             students.find_one_and_update({"username": g.user}, {"$set": {'dsp':score}})
-            return redirect(url_for('user'))
+            flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
+            flash('Check user page for all your scores')
+            return redirect(url_for('score'))
         else:
-            print("fingerprint not verified. Restart Quiz Please")
-            return redirect(url_for('user'))
+            print("fingerprint not verified. Test score not submitted")
+            flash('Fingerprint not verified. Test score not submitted')
+            return redirect(url_for('score'))
         return render_template('user.html')
 
 
@@ -313,10 +329,13 @@ def score5(score_id):
         if (str(verify) == last_login_fp):
             print("fingerprint verified")
             students.find_one_and_update({"username": g.user}, {"$set": {'java':score}})
-            return redirect(url_for('user'))
+            flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
+            flash('Check user page for all your scores')
+            return redirect(url_for('score'))
         else:
-            print("fingerprint not verified. Restart Quiz Please")
-            return redirect(url_for('user'))
+            print("fingerprint not verified. Test score not submitted")
+            flash('Fingerprint not verified. Test score not submitted')
+            return redirect(url_for('score'))
         return render_template('user.html')
 
 
@@ -336,11 +355,14 @@ def score6(score_id):
         if (str(verify) == last_login_fp):
             print("fingerprint verified")
             students.find_one_and_update({"username": g.user}, {"$set": {'javascript':score}})
-            return redirect(url_for('user'))
+            flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
+            flash('Check user page for all your scores')
+            return redirect(url_for('score'))
         else:
-            print("fingerprint not verified. Restart Quiz Please")
-            return redirect(url_for('user'))
-        return render_template('user.html')
+            print("fingerprint not verified. Test score not submitted")
+            flash('Fingerprint not verified. Test score not submitted')
+            return redirect(url_for('score'))
+        #return render_template('user.html')
 
 
 @app.route('/maths/<score_id>', methods=['GET', 'POST'])
@@ -359,10 +381,13 @@ def score7(score_id):
         if (str(verify) == last_login_fp):
             print("fingerprint verified")
             students.find_one_and_update({"username": g.user}, {"$set": {'maths':score}})
-            return redirect(url_for('user'))
+            flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
+            flash('Check user page for all your scores')
+            return redirect(url_for('score'))
         else:
-            print("fingerprint not verified. Restart Quiz Please")
-            return redirect(url_for('user'))
+            print("fingerprint not verified. Test score not submitted")
+            flash('Fingerprint not verified. Test score not submitted')
+            return redirect(url_for('score'))
         return render_template('user.html')
 
 
@@ -382,10 +407,13 @@ def score8(score_id):
         if (str(verify) == last_login_fp):
             print("fingerprint verified")
             students.find_one_and_update({"username": g.user}, {"$set": {'nodejs':score}})
-            return redirect(url_for('user'))
+            flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
+            flash('Check user page for all your scores')
+            return redirect(url_for('score'))
         else:
-            print("fingerprint not verified. Restart Quiz Please")
-            return redirect(url_for('user'))
+            print("fingerprint not verified. Test score not submitted")
+            flash('Fingerprint not verified. Test score not submitted')
+            return redirect(url_for('score'))
         return render_template('user.html')
 
 
@@ -405,11 +433,14 @@ def score9(score_id):
         if (str(verify) == last_login_fp):
             print("fingerprint verified")
             students.find_one_and_update({"username": g.user}, {"$set": {'proeng':score}})
-            return redirect(url_for('user'))
+            flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
+            flash('Check user page for all your scores')
+            return redirect(url_for('score'))
         else:
-            print("fingerprint not verified. Restart Quiz Please")
-            return redirect(url_for('user'))
-        return render_template('user.html')
+            print("fingerprint not verified. Test score not submitted")
+            flash('Fingerprint not verified. Test score not submitted')
+            return redirect(url_for('score'))
+        #return render_template('user.html')
 
 
 @app.route('/python/<score_id>', methods=['GET', 'POST'])
@@ -428,11 +459,19 @@ def score10(score_id):
         if (str(verify) == last_login_fp):
             print("fingerprint verified")
             students.find_one_and_update({"username": g.user}, {"$set": {'python':score}})
-            return redirect(url_for('user'))
+            flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
+            flash('Check user page for all your scores')
+            return redirect(url_for('score'))
         else:
-            print("fingerprint not verified. Restart Quiz Please")
-            return redirect(url_for('user'))
-        return render_template('user.html')
+            print("fingerprint not verified. Test score not submitted")
+            flash('Fingerprint not verified. Test score not submitted')
+            return redirect(url_for('score'))
+        #return render_template('user.html')
+
+
+@app.route('/score')
+def score():
+    return render_template('score.html')
 
 
 

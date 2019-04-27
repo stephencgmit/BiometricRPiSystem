@@ -33,37 +33,41 @@
 			<div class="navbar-header">
 				<a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home"></span> Raspberry Pi College</a>
 			</div>
-			<ul class="nav navbar-nav">
-
-				<li><a href="/"><span class="glyphicon glyphicon-new-window"></span> Log-Out</a></li>
-			</ul>
 		</div>
 	</nav>
+	<div style="padding:20px"></div>
+			{% with messages = get_flashed_messages() %}
+			{% if messages %}
+				{% for message in messages %}
+					<div class=alert alert-warning alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+					aria-hidden="true">&times;</span></button>
+						<h1>{{message}}</h1>
+						
+					</div>
+					{% endfor %}
+				{% endif %}
+			{% endwith %}
+
 <div class="jumbotron text-center">
     <div class="container">
         <h1>Student Register Page</h1>
-  <p>Please enter details to register!</p>
+  <p>Please enter details to register and put finger on scanner!</p>
     </div>
 </div>
+	<div style="padding:10px"></div>
 
 <div class="container">
 
         </div>
               <form action="" method="post">
-                          <label for="finger">Select Finger :</label>
-                  <div class="form-group">
-                  <select class="form-control" id="finger" size="6px">
-                        <option value="rightthumb">Right Thumb</option>
-                        <option value="leftthumb">Left Thumb</option>
-                        <option value="leftmidfinger">Left MidFinger</option>
-                        <option value="rightmidfinger">Right MidFinger</option>
-                        <option value="leftindexfinger">Left IndexFinger </option>
-                        <option value="rightindexfinger">Right IndexFinger</option>
-                  </select>
-             </div>
                 <input type="text" placeholder="Username" class="form__input" name="username" value="{{ request.form.username }}">
-                <h2>Place Finger Over Scanner When Logging In</h2>
-        <input class="btn btn-default" class="form__btn" type="submit" value="Login">
+                	<div style="padding:15px"></div>
+
+                <h2>Place Finger Over Scanner When Registering</h2>
+                	<div style="padding:15px"></div>
+
+        <input class="btn btn-default" class="form__btn" type="submit" value="Register">
       </form>
               </div>
               </div>

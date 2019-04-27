@@ -13,6 +13,7 @@ client = MongoClient("mongodb://fpDBuser:project2019@fingerprintproject-shard-00
 
 mydb = client['fingerprint_project']
 coll = mydb['students']
+login_fails = 0
 
 def login():
     try:
@@ -51,8 +52,14 @@ def login():
     
     if ( positionNumber == -1 ):
         print('No match found! Try again')
+        global login_fails
+        login_fails=login_fails+1
         time.sleep(0.5)
-        login()
+        if(login_fails <= 3):
+            print("Login Attempt: #" + str(login_fails))
+            login()
+        print("Fingerprint login failed")
+        return -1
     else:
         return temp
 
@@ -68,7 +75,7 @@ def reg(username):
     except Exception as e:
         print('The fingerprint sensor could not be initialized!')
         print('Exception message: ' + str(e))
-        register()
+        #register()
         exit(1)
 
     print('Currently used templates: ' + str(f.getTemplateCount()) +'/'+ str(f.getStorageCapacity()))
@@ -83,7 +90,7 @@ def reg(username):
 
     if ( positionNumber >= 0 ):
         print('Template already exists at position #' + str(positionNumber))
-        exit(0)
+        return 0
 
     print('Remove finger...')
     time.sleep(0.1)
@@ -119,7 +126,6 @@ def reg(username):
         coll.insert_one(new_user)
     else:
         last_user = x['uid']
-        print("last user" + str(last_user))
         next_user = last_user + 1
         new_user = {}
         new_user["uid"] = next_user
