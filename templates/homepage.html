@@ -25,6 +25,8 @@ body  {
       <p style="color: white">BIOMETRIC COLLEGE LOGIN SYSTEM</p>
     </div>
     <ul class="nav navbar-nav navbar-right">
+		     <li style="padding-top: 1px;"><a href='/admin'><span class="glyphicon glyphicon-user"></span> Admin</a></li>
+
       <li style="padding-top: 1px;"><a href='/register'><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
       <li style="padding-top: 1px;"><a href='/login'><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
       <li style="padding-right: 40px;"><a href='/download_fingerprint'><span class="glyphicon glyphicon-log-in"></span> Download FP</a></li>
@@ -33,9 +35,23 @@ body  {
   </div>
 </nav>
 	  <div style="padding:20px"></div>
+
 <div class="container">
 
   <div class="jumbotron" id="readme">
+	  	  			{% with messages = get_flashed_messages() %}
+			{% if messages %}
+				{% for message in messages %}
+					<div class=alert alert-warning alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+					aria-hidden="true">&times;</span></button>
+						<h1><font color="red">{{message}}</font></h1>
+						
+					</div>
+					{% endfor %}
+				{% endif %}
+			{% endwith %}
+
 
       <h1>Welcome to Raspberry Pi College</h1>
       	  <div style="padding:20px"></div>

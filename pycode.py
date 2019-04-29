@@ -15,7 +15,7 @@ mydb = client['fingerprint_project']
 coll = mydb['students']
 login_fails = 0
 
-def login():
+def login1():
     try:
         f = PyFingerprint('/dev/ttyUSB0', 57600, 0xFFFFFFFF, 0x00000000)
 
@@ -36,7 +36,7 @@ def login():
         result = f.searchTemplate() ## Searchs template
         positionNumber = result[0]
         accuracyScore = result[1]
-        temp = positionNumber
+    
         if ( positionNumber == -1 ):
             print('No match found! Try again')
             time.sleep(0.5)
@@ -44,6 +44,7 @@ def login():
         else:
             print('Found template at position #' + str(positionNumber))
             print('The accuracy score is: ' + str(accuracyScore))
+            temp = positionNumber
             #return 0
     except Exception as e:
         print('Operation failed!')
@@ -52,15 +53,17 @@ def login():
     
     if ( positionNumber == -1 ):
         print('No match found! Try again')
-        global login_fails
-        login_fails=login_fails+1
-        time.sleep(0.5)
-        if(login_fails <= 3):
-            print("Login Attempt: #" + str(login_fails))
-            login()
+        #global login_fails
+        #login_fails=login_fails+1
+        #time.sleep(0.5)
+        #print('login_fails' + str(login_fails))
+        #if(login_fails <= 3):
+        #    print("Login Attempt: #" + str(login_fails))
+            #login1()
         print("Fingerprint login failed")
         return -1
     else:
+        temp = positionNumber
         return temp
 
 def reg(username):

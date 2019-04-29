@@ -56,7 +56,7 @@ def login():
         username=request.form['username']
         print(username)
         session['user'] = request.form['username']
-        last_login_fp = pycode.login() # variable used to track last login fingerprint
+        last_login_fp = pycode.login1() # variable used to track last login fingerprint
         print('uid =' + str(last_login_fp))
         mongo_query = {"username": username}
         search = students.find(mongo_query)
@@ -67,7 +67,7 @@ def login():
         print(search)
         print(search.count()) # check number of returned usernames from mongo
         if(search.count() == 0 or last_login_fp == -1):
-            print('USER NOT FOUND IN MONGODB')
+            print('USER NOT FOUND ')
             flash('User not found. Try Again!')
             return redirect(url_for('login'))
         else:
@@ -152,19 +152,23 @@ def dashboard():
 
 @app.route("/user")
 def user():
-    user = {'username': g.user}
-    list1 = []
-    for search in students.find({},{"image_template": 0, "uid":0, '_id':0}):
-        if(search['username']) == user['username']:
-            list1.append(search)
-    print("Print the list from mongo please: " + str(list1))
-    score_splitter = str(list1[0])
-    new_str = score_splitter.strip('{')
-    new__str = new_str.strip('}')
-    new___str = new__str.replace("'", '')
-    my_list = new___str.split(",")
-    template = jinja_env.get_template('user.html')
-    return template.render(my_list=my_list)
+    if g.user:
+        user = {'username': g.user}
+        list1 = []
+        for search in students.find({},{"image_template": 0, "uid":0, '_id':0}):
+            if(search['username']) == user['username']:
+                list1.append(search)
+        print("Print the list from mongo please: " + str(list1))
+        score_splitter = str(list1[0])
+        new_str = score_splitter.strip('{')
+        new__str = new_str.strip('}')
+        new___str = new__str.replace("'", '')
+        my_list = new___str.split(",")
+        template = jinja_env.get_template('user.html')
+        return template.render(my_list=my_list)
+    flash('Login for requested page!')
+    return redirect(url_for('homepage'))
+
 
 @app.route("/leaderboard")# using jinja templating to render scores from mongo
 def leaderboard():
@@ -178,7 +182,8 @@ def leaderboard():
         #items = dict(zip(doc[::2],doc[1::2]))
         template = jinja_env.get_template('leaderboard.html')
         return template.render(items=items, user=user)
-    return render_template("homepage.html")
+    flash('Login for requested page!')
+    return redirect(url_for('homepage'))
 
 
 @app.route("/loggedin")
@@ -188,36 +193,39 @@ def loggedin():
 
 @app.route('/module/<category>', methods=["GET","POST"])
 def subcategory(category):
-    user = {'username': g.user}
-    if category == "java":
-        return render_template('/modules/java.html', user=user)
+    if g.user:
+        user = {'username': g.user}
+        if category == "java":
+            return render_template('/modules/java.html', user=user)
 
-    elif category == "android":
-        return render_template('/modules/android.html', user=user)
+        elif category == "android":
+            return render_template('/modules/android.html', user=user)
 
-    elif category == "cpp":
-        return render_template('/modules/cpp.html', user=user)
+        elif category == "cpp":
+            return render_template('/modules/cpp.html', user=user)
 
-    elif category == "cloud":
-        return render_template('/modules/cloud.html' , user=user)
+        elif category == "cloud":
+            return render_template('/modules/cloud.html' , user=user)
 
-    elif category == "proeng":
-        return render_template('/modules/profeng.html',user=user)
+        elif category == "proeng":
+            return render_template('/modules/profeng.html',user=user)
 
-    elif category == "dsp":
-        return render_template('/modules/dsp.html', user=user)
+        elif category == "dsp":
+            return render_template('/modules/dsp.html', user=user)
 
-    elif category == "python":
-        return render_template('/modules/python.html', user=user)
+        elif category == "python":
+            return render_template('/modules/python.html', user=user)
 
-    elif category == "javascript":
-        return render_template('/modules/javascript.html', user=user)
+        elif category == "javascript":
+            return render_template('/modules/javascript.html', user=user)
 
-    elif category == "nodejs":
-        return render_template('/modules/nodejs.html', user=user)
+        elif category == "nodejs":
+            return render_template('/modules/nodejs.html', user=user)
 
-    elif category == "math":
-        return render_template('/modules/maths.html', user=user)
+        elif category == "maths":
+            return render_template('/modules/maths.html', user=user)
+    flash('login please for access to requested page')
+    return redirect(url_for('homepage'))
 
 
 @app.route('/android/<score_id>', methods=['GET', 'POST'])
@@ -241,6 +249,8 @@ def score1(score_id):
             log_score = (user + ' scored ' + str(score) + ' in Android quiz')
             mongo_insert = {date: log_score}
             x = log.insert_one(mongo_insert)
+            score_insert = {'uid': user, 'score1': score}
+            y = scores.insert_one(score_insert)
             flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
             flash('Check user page for all your scores')
             return redirect(url_for('score'))
@@ -269,7 +279,8 @@ def score2(score_id):
             user = g.user
             date = arrow.now().format('YYYY-MM-DD hh-mm-ss')
             log_score = (user + ' scored ' + str(score) + ' in Cloud quiz')
-
+            score_insert = {'uid': user, 'score1': score}
+            y = scores.insert_one(score_insert)
             mongo_insert = {date: log_score}
             x = log.insert_one(mongo_insert)
             flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
@@ -301,7 +312,8 @@ def score3(score_id):
             user = g.user
             date = arrow.now().format('YYYY-MM-DD hh-mm-ss')
             log_score = (user + ' scored ' + str(score) + ' in Cpp quiz')
-
+            score_insert = {'uid': user, 'score1': score}
+            y = scores.insert_one(score_insert)
             mongo_insert = {date: log_score}
             x = log.insert_one(mongo_insert)
             flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
@@ -333,9 +345,11 @@ def score4(score_id):
             user = g.user
             date = arrow.now().format('YYYY-MM-DD hh-mm-ss')
             log_score = (user + ' scored ' + str(score) + ' in DSP quiz')
-
+            score_insert = {'uid': user, 'score1': score}
+            y = scores.insert_one(score_insert)
             mongo_insert = {date: log_score}
             x = log.insert_one(mongo_insert)
+            x = score.insert_one(mongo_insert)
             flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
             flash('Check user page for all your scores')
             return redirect(url_for('score'))
@@ -365,7 +379,8 @@ def score5(score_id):
             user = g.user
             date = arrow.now().format('YYYY-MM-DD hh-mm-ss')
             log_score = (user + ' scored ' + str(score) + ' in Java quiz')
-
+            score_insert = {'uid': user, 'score1': score}
+            y = scores.insert_one(score_insert)
             mongo_insert = {date: log_score}
             x = log.insert_one(mongo_insert)
             flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
@@ -399,6 +414,8 @@ def score6(score_id):
             log_score = (user + ' scored ' + str(score) + ' in Javascript quiz')
             mongo_insert = {date: log_score}
             x = log.insert_one(mongo_insert)
+            score_insert = {'uid': user, 'score1': score}
+            y = scores.insert_one(score_insert)
             flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
             flash('Check user page for all your scores')
             return redirect(url_for('score'))
@@ -406,7 +423,7 @@ def score6(score_id):
             print("fingerprint not verified. Test score not submitted")
             flash('Fingerprint not verified. Test score not submitted')
             return redirect(url_for('score'))
-        #return render_template('user.html')
+        return render_template('user.html')
 
 
 @app.route('/maths/<score_id>', methods=['GET', 'POST'])
@@ -428,7 +445,8 @@ def score7(score_id):
             user = g.user
             date = arrow.now().format('YYYY-MM-DD hh-mm-ss')
             log_score = (user + ' scored ' + str(score) + ' in Maths quiz')
-
+            score_insert = {'uid': user, 'score1': score}
+            y = scores.insert_one(score_insert)
             mongo_insert = {date: log_score}
             x = log.insert_one(mongo_insert)
             flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
@@ -460,7 +478,8 @@ def score8(score_id):
             user = g.user
             date = arrow.now().format('YYYY-MM-DD hh-mm-ss')
             log_score = (user + ' scored ' + str(score) + ' in Nodejs quiz')
-
+            score_insert = {'uid': user, 'score1': score}
+            y = scores.insert_one(score_insert)
             mongo_insert = {date: log_score}
             x = log.insert_one(mongo_insert)
             flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
@@ -492,7 +511,8 @@ def score9(score_id):
             user = g.user
             date = arrow.now().format('YYYY-MM-DD hh-mm-ss')
             log_score = (user + ' scored ' + str(score) + ' in Professional Engineer quiz')
-
+            score_insert = {'uid': user, 'score1': score}
+            y = scores.insert_one(score_insert)
             mongo_insert = {date: log_score}
             x = log.insert_one(mongo_insert)
             flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
@@ -502,7 +522,7 @@ def score9(score_id):
             print("fingerprint not verified. Test score not submitted")
             flash('Fingerprint not verified. Test score not submitted')
             return redirect(url_for('score'))
-        #return render_template('user.html')
+        return render_template('user.html')
 
 
 @app.route('/python/<score_id>', methods=['GET', 'POST'])
@@ -510,9 +530,6 @@ def score10(score_id):
     user = {'username': g.user}
     if request.method == 'GET':
         score = int(score_id)
-
-
-        
         score = score*10
         print("Users score is: " + str(score))
         f = open("/home/pi/Desktop/FlaskTutorial/log.txt", "r")
@@ -527,7 +544,8 @@ def score10(score_id):
             user = g.user
             date = arrow.now().format('YYYY-MM-DD hh-mm-ss')
             log_score = (user + ' scored ' + str(score) + ' in Python quiz')
-
+            score_insert = {'uid': user, 'score1': score}
+            y = scores.insert_one(score_insert)
             mongo_insert = {date: log_score}
             x = log.insert_one(mongo_insert)
             flash('Fingerprint verified. Test score submitted successfully. Stored in DB')
@@ -537,7 +555,7 @@ def score10(score_id):
             print("fingerprint not verified. Test score not submitted")
             flash('Fingerprint not verified. Test score not submitted')
             return redirect(url_for('score'))
-        #return render_template('user.html')
+        return render_template('user.html')
 
 
 @app.route('/score')
@@ -552,14 +570,14 @@ def admin():
         password = request.form['password']
         if(password== 'admin' and username == 'admin'):
             print('hi admin')
-            redirect(url_for(viewdb))
+            return redirect(url_for('viewdb'))
         else:
             print('not now admin')
-            redirect(url_for(index))
+            return redirect(url_for('index'))
     return render_template('admin.html')
 
 
-@app.route('/viewdb')
+@app.route('/admin/viewdb')
 def viewdb():
     loglists = []
     for x in log.find({},{"_id":0}):
